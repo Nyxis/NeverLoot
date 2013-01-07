@@ -1,6 +1,9 @@
 # Propel directories
-lib/model/om/*
+data/sql/*
+lib/filter/base/*
+lib/form/base/*
 lib/model/map/*
+lib/model/om/*
 
 # other filess
 config/databases.yml
