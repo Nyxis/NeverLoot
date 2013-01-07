@@ -1,0 +1,634 @@
+body,div,h1,h2,h3,h4,h5,p,img,fieldset{ margin:0px; padding:0px; }
+a,img,fieldset{ border-width:0px; }
+.clear_float{ clear:both; }
+
+body{
+	background-image:url('../images/fanart-1192-full.jpg');
+    background-repeat:no-repeat;
+    background-position:top center;
+    background-color:black;
+	background-attachment: fixed;
+    text-align:center; font-family:Arial; color:white;
+    overflow-x: hidden;
+}
+
+#global{ margin-left:auto; margin-right:auto;  text-align:left; width:955px; background-color: black; border: 1px white solid; border-top: 0px white solid;}
+#header{ width:100%; }
+
+#banner, #login_info { position:relative; float:left; }
+#banner{ width:660px; height:110px; background-image: url('../images/banniere2.jpg'); background-repeat: no-repeat; margin-left: 25px; }
+#login_info{ width:245px; font-style:italic; margin:10px; text-align:right; }
+
+#main{ width:100%; }
+#context{ min-height:400px; margin:10px; margin-top:10px; }
+#footer{ width:100%; height:30px; }
+
+h2 { font-size:22px; margin-bottom:10px; }
+p { margin-top:3px; margin-bottom:3px;}
+a { color:yellow; text-decoration:none; font-style:italic; }
+a:hover { color:white; text-decoration:underline; }
+
+
+/*---------------------------------------------------------------
+** loaderAjax
+**---------------------------------------------------------------*/
+
+div#ajaxWaiter {
+    position: absolute; top: 0; left: 0; width:100%;
+    background-color: black; opacity: 0.7; z-index:100000;
+}
+
+div#ajaxWaiterConteneur {
+    position: absolute; top: 0; left: 0; z-index:100001;
+    width:150px; height:80px; padding-top: 10px;
+    background: url("../images/ui-darkness/ui-bg_gloss-wave_25_333333_500x100.png") repeat-x scroll 50% 50% #333333;
+    border: 1px solid #333333; border-radius:6px;
+    font-style:italic; font-size: 1.1em; font-weight: bold;
+}
+
+div#ajaxWaiterConteneur img {
+    margin-bottom:5px;
+}
+
+
+/*---------------------------------------------------------------
+** boites
+**---------------------------------------------------------------*/
+
+.nl_box_font { font-family: Segoe UI,Arial,sans-serif; color: white }
+.nl_box_tbf { width:926px; overflow:hidden; border-radius: 6px; padding: 4px; border: 1px solid #666666; background: url('../images/ui-darkness/ui-bg_inset-soft_25_000000_1x100.png') repeat-x scroll 50% bottom #000000; }
+.nl_box_tb { width:926px; overflow:hidden; border-radius: 6px; padding: 4px; border: 1px solid #666666; background: url('') repeat-x scroll 50% bottom #000000; }
+.nl_box_header { text-align: center; line-height: 1.8em; font-style:italic; border-radius: 6px; padding: 5px; border: 1px solid #333333;	background: url("../images/ui-darkness/ui-bg_gloss-wave_25_333333_500x100.png") repeat-x scroll 50% 50% #333333; }
+.nl_box_header .title { font-size: 1.1em; font-weight: bold; }
+.nl_box_header.collapser { cursor:pointer; }
+.nl_box_header.acc_click { cursor:pointer; }
+.nl_box_body { }
+.nl_box_footer { height: 32px; margin-top:20px; font-style:italic; font-size: 1.1em; font-weight: bold; text-align:center; }
+.nl_box_footer > div { display:inline-block; }
+.nl_box_footer img { margin-right:5px; width:30px; }
+.nl_box_footer img[src*="new.png"] { margin-right:0px; width:30px; }
+.nl_box_valign_wrap { display:table; height:100%;}
+.nl_box_valign_wrap > div { display:table-cell; vertical-align:middle; }
+.nl_box_tbf a, .nl_box_tb a { color: white; }
+.nl_box_tbf a:hover, .nl_box_tb a:hover { color:#F58400; text-decoration: none; }
+.popup { width: 500px; }
+.popup .nl_box_footer > div { margin-left:20px; margin-right:20px; }
+#fancybox-outer { background-color: transparent; }
+
+/*---------------------------------------------------------------
+** champs de formulaire
+**---------------------------------------------------------------*/
+
+label, select, input, textarea {
+    background-color: black;
+    color:white;
+    border-width:1px;
+}
+
+label {
+  text-align: right;
+}
+
+input[type=checkbox], input[type=radio] {
+  cursor: pointer;
+}
+
+input, textarea, select, .uneditable-input {
+  display: inline-block;
+  border: 1px solid #ccc;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+select {
+  padding: initial;
+}
+
+input[type=checkbox], input[type=radio] {
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 3px 0;
+  *margin-top: 0;
+  /* IE6-7 */
+
+  line-height: normal;
+  border: none;
+}
+input[type=button], input[type=reset], input[type=submit] {
+  width: auto;
+  height: auto;
+}
+select[multiple] {
+  height: inherit;
+  background-color: #ffffff;
+}
+textarea {
+  height: auto;
+}
+input, textarea, select, .transition {
+  -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+  -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+  -ms-transition: border linear 0.2s, box-shadow linear 0.2s;
+  -o-transition: border linear 0.2s, box-shadow linear 0.2s;
+  transition: border linear 0.2s, box-shadow linear 0.2s;
+  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+input:focus, textarea:focus, select:focus {
+  outline: 0;
+  border-color: rgba(255, 175, 15, 0.8);
+  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(255, 175, 15, 0.6);
+  -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(255, 175, 15, 0.6);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(255, 175, 15, 0.6);
+}
+
+.focus {
+  outline: 0;
+  border-color: gold !important;
+  box-shadow: 0 0 8px gold;
+}
+
+input { padding: 5px; }
+select { padding: 5px; }
+input, label, select, textarea { display: inline-block; width:40%; margin:5px; }
+select { width: 212px; cursor: pointer; }
+
+/*---------------------------------------------------------------
+** couleurs de classes
+**---------------------------------------------------------------*/
+.chaman   	 { color:#2359FF; }
+.hunt 		   { color:#AAD372; }
+.deathknight { color:#C41E3B; }
+.droode 	   { color:#FF7C0A; }
+.warlock 	   { color:#9382C9; }
+.warrior 	   { color:#C69B6D; }
+.mage  		   { color:#68CCEF; }
+.paladin 	   { color:#F48CBA; }
+.priest 	   { color:white;   }
+.rogue 	 	   { color:#FFF468; }
+.monk        { color:#00FFBA; }
+
+
+
+/*---------------------------------------------------------------
+** box login et register
+**---------------------------------------------------------------*/
+
+#global_no_masthead{
+    margin-left:auto; margin-right:auto;  text-align:left; margin-top: 100px;
+	border: 1px white solid; background-color: black;
+	width:500px;
+}
+
+#global_no_masthead.login{ margin-top: 300px; }
+
+#global_no_masthead .nl_box_content { margin-top: 10px; }
+
+#global_no_masthead h2 {
+    width:470px; padding-bottom: 3px;
+    margin-left: 10px; margin-top:15px; margin-bottom: 10px;
+    border-bottom: 1px solid #666;
+    font-size:16px; font-style: italic;
+
+}
+.login_box .nl_box_footer, .register_box .nl_box_footer { text-align: left; }
+.login_box .nl_box_footer > div { margin-left: 60px; }
+.register_box .nl_box_footer > div { margin-left: 70px; }
+
+
+
+/*---------------------------------------------------------------
+** fiche perso
+**---------------------------------------------------------------*/
+
+/** disposition des blocs */
+#fiche_perso > div { display:inline-block; vertical-align:top; }
+#fiche_perso > div:first-child { width: 460px; margin-right:5px; }
+#fiche_perso > div+div { width: 465px; }
+
+/** classe et nom de perso */
+.infos_perso { width:450px; margin-right:10px; }
+.infos_perso .nl_box_body { margin:10px; min-height:108px; }
+.classe div+div { font-size:1.1em; margin-top:0px; }
+.classe div:first-child { font-weight: bold; font-size:1.2em; line-height:22px; }
+.classe img { width:50px; margin-right: 5px; }
+
+/** spécialisations */
+.listeSpe { margin-top:10px; margin-bottom:10px;}
+.spe { min-width:106px; margin-right: 8px; display:inline-block; margin-bottom:5px;}
+.spe > div:first-child > img { width:40px; margin-right:3px; }
+.spe div+div img { width:20px; }
+.spe .nl_box_valign_wrap { height:20px; }
+.spe div+div { height:40px; font-size:1em; font-weight: bold; }
+.spe div+div > div div { height:20px; margin-top:0px; font-size:1em; font-weight: normal; }
+
+/** encart loot */
+.infos_perso .loot {
+	float: right; padding:7px; margin-right:-7px; margin-left:2px;
+	border: 1px solid #666666; border-radius: 6px;
+	background-color: #151515; font-size:1.1em;
+}
+.infos_perso td:first-child { text-align:right; }
+.infos_perso tr:last-child { font-weight: bold; padding-top:3px; border-top: 1px solid #666666;	 }
+
+/** nouveau perso et liste persos */
+.new_perso { width:450px; margin-right:10px; margin-top: 10px; }
+.new_perso .nl_box_body { margin:10px; }
+.new_perso input { width: 200px; }
+
+.autres_persos { margin-top:20px; }
+.autres_persos .list_head { font-size: 1.1em; font-weight: bold; font-style:italic; margin-bottom:3px; }
+.autres_persos a { display:inline-block; font-style:normal; font-size:1.1em; margin-right:10px; }
+.autres_persos img { width:25px; }
+
+/** popup d'édition */
+#editPerso .form_perso { margin-top:10px; }
+#editPerso label { width:120px; margin-right:20px; }
+#editPerso input, #editPerso select { margin-right:30px; }
+
+/** bloc wishlists */
+.blocWishlist .nl_box_tbf { width:455px; margin-right:0px; margin-bottom:10px;}
+.blocWishlist .nl_box_footer { text-align: center; }
+
+/** formulaire créa / edit wishlist */
+.form_wishlist { margin-top:5px; text-align: left; }
+.form_wishlist .ilvl { display:inline-block; width:225px; margin-left:5px;}
+.form_wishlist .ilvl > div:first-child { margin-bottom:5px; }
+.form_wishlist label[for=description] { height: 97px; vertical-align:bottom; }
+.form_wishlist input { width:215px; }
+.form_wishlist textarea { width:225px; }
+.form_wishlist select { width:227px; }
+.form_wishlist .min, .form_wishlist .max { color:#0078A3; font-weight:bold; }
+
+/** affichage wishlist */
+.wishlist .nl_box_footer > div+div { padding-left:50px; }
+.groupeObjets { margin: 5px; }
+.groupeObjets > div:first-child img { width: 50px; }
+.groupeObjets > div:first-child > div+div { font-size:1.2em; font-weight:bold; padding-left:5px; }
+
+.listeObjets { margin-left:25px; padding-left:15px; border-left:1px dotted #666666; }
+.empty .label { color:#666666; font-style:italic; }
+
+
+/** import wishlist */
+.importWishlist .nl_box_body { padding-top: 10px; }
+.importWishlist label { width:360px; margin-left: 16px; text-align: left; font-size:0.8em; font-style:italic;}
+.importWishlist label a { color: gold; }
+.importWishlist textarea { width:350px; margin-left: 11px;}
+
+/** edition objets */
+.editWlo .nl_box_body { padding: 20px; }
+.editWlo .autocomplete { display:inline-block; text-align:center; }
+.editWlo .autocomplete input { width: 300px; }
+.editWlo .autocomplete .nl_box_valign_wrap > div:first-child { width: 50px; }
+.editWlo .autocomplete div:first-child img { width: 50px; }
+.editWlo .autocomplete .open {
+    border: 1px solid #CCCCCC;
+    border-radius: 3px 3px 3px 3px;
+    height: 13px; display: block;
+    padding: 10px 3px 3px;
+}
+.ui-autocomplete {
+    max-height: 300px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+    /* add padding to account for vertical scrollbar */
+    padding-right: 20px;
+}
+.auto_list_item .picto { width: 36px; }
+.auto_list_item .label { padding-left:10px; text-align:left; font-size:1em; line-height:1; height:40px; }
+
+.editWlo .admin { text-align: left; margin-top: 25px; }
+.editWlo .admin a { font-size:0.8em; font-style:italic; color: white; }
+.editWlo .admin div > * { width: auto; }
+
+.editWlo .nl_box_footer > div { margin-left: 10px; margin-right:10px; }
+.editWlo .nl_box_footer img { margin: 0px; }
+
+
+/*---------------------------------------------------------------
+** vignettes personnages
+**---------------------------------------------------------------*/
+
+.perso-min {
+    display:inline-block;
+    height:40px;
+    margin-right:5px; margin-bottom:5px;
+    padding: 5px; padding-bottom: 3px;
+    background: url("../images/ui-darkness/ui-bg_glass_30_111111_1x400.png") repeat-x scroll 50% 50.5% #111111;
+    border: 1px solid #666666;
+    font-size: 15px; line-height:16px; font-weight: bold; color: #EEEEEE;
+}
+
+.perso-min > div:first-child img { width: 37px; margin-right:3px; }
+
+.perso-min > div+div > div:first-child { margin-bottom:2px; }
+.perso-min > div+div > div+div { display: inline-block; font-size:1.1em; margin-top: 3px; color:white; }
+.perso-min > div+div > div+div img { width: 16px; }
+
+/*---------------------------------------------------------------
+** vignettes objets
+**---------------------------------------------------------------*/
+
+.item {
+    display: inline-block;
+    width: 182px; height:45px; margin:3px 3px 2px 2px; padding: 4px 4px 5px; overflow:hidden;
+    background: url("../images/ui-darkness/ui-bg_glass_30_111111_1x400.png") repeat-x scroll 50% 50% #111111;
+    border: 1px solid #666666; cursor: pointer;
+    font-size: 14px; line-height:16px; font-weight: bold; color: white !important;
+}
+
+.item:hover { border:1px #0078A3 solid; }
+.item .picto { width: 45px; }
+.item .picto img { width: 36px; margin-left: 5px;}
+.item .label:first-letter { text-transform:uppercase; }
+.item .label { font-style: normal; padding-left:5px; margin-left:5px; }
+
+/*---------------------------------------------------------------
+** générateur de compos
+**---------------------------------------------------------------*/
+
+#edit_raid > div { float:left; }
+
+/** formulaire d'infos soirées */
+.form_soiree { width:450px; margin-right:10px; margin-top:10px; }
+.form_soiree .nl_box_body{ margin-top: 10px; }
+.form_soiree label[for=description] { height: 97px; vertical-align:bottom;}
+.form_soiree input { width:215px; }
+.form_soiree textarea { width:225px; }
+.form_soiree select { width:227px; }
+.form_soiree .nl_box_footer > div { margin-right: 20px; margin-left: 20px; }
+
+/** affichage des compos (commune avec la fiche) */
+.compo .list_head { font-size: 1.2em; font-style:italic; font-weight:bold; text-decoration:underline;}
+.role .list_head img { width: 40px; }
+.appele .list_head img,
+.absent .list_head img,
+.rpl_admin .list_head img,
+.refus_admin .list_head img { width: 30px; margin-left:5px; margin-right:5px; }
+.compo .perso-min:hover { border:1px #0078A3 solid; color:inherit; }
+.compo .list_head div+div { padding-bottom:6px; }
+
+/** edition compo */
+.edit_compo { width: 455px; }
+.edit_compo .nl_box_body { margin-top: 10px; }
+.edit_compo .droppable { min-height: 50px; margin: 10px; padding: 10px; }
+.edit_compo .inner {
+    margin-left:24px; margin-top: -15px; margin-bottom: 10px;
+    padding-left:5px;
+    border-left:1px dotted #777788;
+}
+
+/** vignettes persos */
+.edit_compo .perso-min {
+    cursor:move;
+    border-color:green;
+    margin: 0px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.inscrits { width: 450px; }
+.inscrits .nl_box_body { padding: 10px; }
+.inscrits .perso { display: inline-block; }
+.inscrits .perso > * { position: relative; float: left; }
+.inscrits .perso .open {
+    margin-bottom:5px; margin-right: 5px; margin-left: -5px;
+    background-color: #222222;
+    border: 1px solid #666666;
+    border-left-width: 0px;
+    padding:1px;
+    padding-bottom: 5px;
+    padding-top:3px;
+}
+.inscrits .perso-min{ cursor:move; }
+.inscrits .rerolls > div { display:inline-block; }
+.inscrits .perso-min:hover { border:1px #0078A3 solid; color:inherit; }
+
+/** export compo */
+#exportCompo textarea { width: auto; margin-top:10px; }
+
+/*---------------------------------------------------------------
+** roster
+**---------------------------------------------------------------*/
+
+#roster .perso > * { display:inline-block; vertical-align: middle; margin-left:10px; margin-right:10px; width:150px;}
+#roster .main { margin-top:10px; }
+#roster .reroll { margin-left:46px; }
+
+#roster .perso > div:first-child { width: 20px; margin-right:0px; }
+
+#roster .perso > a { width: 200px; display: inline-block; color:inherit; font-style:normal; margin-left:3px; }
+#roster .perso > a img { width: 40px; }
+#roster .perso > a > div+div { padding-bottom: 4px; padding-left: 5px; }
+#roster .perso > a > div+div div:first-child { font-weight:bold; }
+
+#roster .spe img { width: 30px; }
+#roster .spe div+div { font-size:0.9em; }
+#roster .spe div+div div+div { padding-bottom:4px; }
+#roster .spe div+div img { width: 24px; }
+
+#roster .perso .soirees,
+#roster .perso .loot { width:70px; }
+#roster .perso .prio { width:90px; }
+#roster .perso .ratio { font-weight: bold; }
+
+/*---------------------------------------------------------------
+** fiche raid
+**---------------------------------------------------------------*/
+
+.fiche_compo .nl_box_body { margin-top:10px; margin-left: 5px; }
+.fiche_compo .calendar { display: inline-block; width: 260px; margin-left: 5px; }
+.fiche_compo .infos { display: inline-block; width: 650px; vertical-align:top; }
+.fiche_compo .head { margin-left:10px; margin-top:6px; font-size:20px; font-weight: bold; }
+.fiche_compo .nl_box_footer > div { margin-left: 50px; margin-right: 50px; }
+
+/** bannière et infos */
+.fiche_compo .banner{ height:85px; padding-top:40px; font-size: 1.1em; font-weight: bold; background-position: center bottom; }
+.fiche_compo .banner div{ margin-left: 30px; font-size:30px; text-shadow: 0px 0px 10px black;}
+.fiche_compo .desc { height: 80px; margin-left:10px; margin-top:6px; font-style:italic; overflow:hidden; }
+
+/* calendar */
+.fiche_compo .ui-datepicker { width: 14em; }
+.fiche_compo .ui-datepicker table { font-size: 0.7em; }
+.fiche_compo .ui-datepicker th { padding: 0.5em 0.3em; }
+.fiche_compo .calendar a:hover { color: inherit; }
+.fiche_compo .ui-state-hover { color: inherit; }
+
+/** compo */
+.fiche_compo .compo { margin-top:15px; }
+.fiche_compo .compo .head { margin-bottom:5px; }
+.fiche_compo .compo .list_head { height: 42px; }
+.fiche_compo .compo > div+div {
+    display:inline-block; width: 299px; margin-right:5px; vertical-align:top;
+}
+.fiche_compo .inner {
+    margin-left:19px; margin-top: -5px; margin-bottom: 10px;
+    padding-left:19px;
+    border-left:1px dotted #777788;
+}
+
+.fiche_compo .inner a { font-style: normal; }
+
+
+/*---------------------------------------------------------------
+** gestion loot
+**---------------------------------------------------------------*/
+
+.gestion_loot > div { position: relative; float:left; }
+
+/** fiches boss */
+.ficheBoss { width: 405px; margin-top:10px;}
+.ficheBoss .bossBanner { margin-top:10px; margin-bottom:5px; margin-left:5px; }
+.ficheBoss .bossBanner img { width: 392px; border:1px #666666 solid; }
+.ficheBoss .item.selected {
+    border:1px #0078A3 solid;
+    background: url("../images/ui-darkness/ui-bg_glass_30_00294d_1x400.png") repeat-x scroll 50% 50% #111111;
+}
+.ficheBoss .itemList { padding-left:2px; }
+.ficheBoss .itemList .item { margin-left:3px; }
+.gestion_loot .hm {
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 10px #850010;
+  -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 10px #850010;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 10px #850010;
+}
+
+/** liste persos */
+.listePrio { width: 500px; margin-top:10px; margin-left:10px;}
+.listePrio table { margin-top:10px;}
+.listePrio .perso { margin-left:30px; }
+.listePrio table .perso td { padding-right:20px; vertical-align:middle; }
+.listePrio .perso .img_classe { width:50px; padding-right:0px; text-align: right; }
+.listePrio .perso .img_classe img { width:25px; }
+.listePrio .perso .nom { width:350px; font-size: 1.2em;}
+.listePrio .perso .loot { width:110px; padding-right:10px; vertical-align: top; }
+.listePrio .perso .loot img { width:25px; }
+.listePrio .perso .loot a:hover { color:#0078A3; text-decoration:none; }
+.listePrio .perso .prio { width:125px; padding-right:10px; }
+.listePrio .perso .prio .ratio{ font-weight:bold; }
+.listePrio .caddie { border-left:1px dotted #666666; margin-left:30px; padding-left: 15px; }
+
+.listePrio .caddie .item .picto { width: 36px; }
+.listePrio .caddie .item .picto img { margin: 0px; }
+.listePrio .caddie .item { padding:0px; height: 52px; padding-left:5px; }
+
+.listePrio .hidden { margin:0px; border:0px solid black; padding:0px; }
+
+/** bloc d'attribution */
+.listePersosObjet { height:400px; }
+
+.attribution { width: 500px; margin-top:10px; margin-left:10px; }
+.attribution .nl_box_body > div { margin-left:15px; margin-top:10px; margin-bottom:20px; }
+.attribution .nl_box_body > div img { width:50px; }
+.attribution .nl_box_body > div .name { padding-left:10px; padding-right:18px; width:200px;
+    font-size: 1.2em; line-height:21px; font-weight: bold; color: #EEEEEE;
+}
+
+.attribution .encart {
+	padding:10px; margin-top:1px;
+	border: 1px solid #666666; border-radius: 6px;
+	background-color: #151515; font-size:1em;
+}
+.attribution .encart .lib { text-align:right; }
+
+.attribution .liste tr { margin-left:30px; }
+.attribution .liste td { padding-right:10px; vertical-align:middle; }
+.attribution .liste .input { width:25px; padding-left:30px; }
+.attribution .liste .img_role img { width:30px; }
+.attribution .liste .img_classe { padding-right:0px; }
+.attribution .liste .img_classe img { width:25px; }
+.attribution .liste .nom { width:140px; font-size: 1.2em;}
+.attribution .liste .wlspe { width:100px; font-size: 0.7em; font-style:italic; }
+.attribution .liste .loot { width:30px;}
+.attribution .liste .loot img { width:30px;}
+.attribution .liste .prio { width:125px; padding-right:10px; }
+.attribution .liste .prio span{ font-weight:bold; }
+
+.attribution .nl_box_footer > div { margin-left:45px; margin-right:45px; }
+
+
+/*---------------------------------------------------------------
+// messages
+//--------------------------------------------------------------- */
+
+div.msg { border:1px solid white; padding:5px; margin:10px; font-style:italic; margin-top:0px; }
+div.error-msg { border-color: red; color: red; }
+div.info-msg { border-color: green; color: green; }
+
+
+/*---------------------------------------------------------------
+// menu
+//--------------------------------------------------------------- */
+
+.ddsmoothmenu{
+    border-top:1px solid #666666;
+    border-bottom:1px solid #666666;
+    /* font: bold 12px Verdana; */
+    background: url("../images/ui-darkness/ui-bg_gloss-wave_25_333333_500x100.png") repeat-x scroll 50% 50% #333333; /*background of menu bar (default state)*/
+    width: 100%;
+}
+
+.ddsmoothmenu ul{
+    z-index:100;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+/*Top level list items*/
+.ddsmoothmenu ul li{
+    position: relative;
+    display: inline;
+    float: left;
+}
+
+/*Top level menu link items style*/
+.ddsmoothmenu ul li a{
+    display: block;
+    background: #333333; /*background of menu items (default state)*/
+    color: white;
+    padding: 8px 10px;
+    border-right: 1px solid #666666;
+    color: #2d2b2b;
+    text-decoration: none;
+}
+
+* html .ddsmoothmenu ul li a{
+    /*IE6 hack to get sub menu links to behave correctly*/ display: inline-block;
+}
+
+.ddsmoothmenu > ul > li > a { background-color: transparent; }
+
+.ddsmoothmenu ul li a:link, .ddsmoothmenu ul li a:visited{ color: white; }
+.ddsmoothmenu ul li a.selected{ /*CSS class that's dynamically added to the currently active menu items' LI A element*/ background: black; color: white;}
+
+.ddsmoothmenu ul li a:hover{background: black; /*background of menu items during onmouseover (hover state)*/color: white;}
+
+/*1st sub level menu*/
+.ddsmoothmenu ul li ul{position: absolute;left: 0;display: none; /*collapse all sub menus to begin with*/ visibility: hidden;}
+
+/*Sub level menu list items (undo style from Top level List Items)*/
+.ddsmoothmenu ul li ul li{display: list-item;float: none;}
+
+/*All subsequent sub menu levels vertical offset after 1st level sub menu */
+.ddsmoothmenu ul li ul li ul{top: 0;}
+
+/* Sub level menu links style */
+.ddsmoothmenu ul li ul li a{ /*font: normal 13px Verdana;*/ width: 160px; /*width of sub menus*/ padding: 5px;margin: 0;border-top-width: 0;border-bottom: 1px solid gray;}
+
+/* Holly Hack for IE \*/
+* html .ddsmoothmenu{height: 1%;} /*Holly Hack for IE7 and below*/
+
+
+/* ######### CSS classes applied to down and right arrow images  ######### */
+.downarrowclass{position: absolute;top: 16px;right: 7px;}
+.rightarrowclass{position: absolute;top: 10px;right: 5px;}
+
+/* ######### CSS for shadow added to sub menus  ######### */
+.ddshadow{ /*shadow for NON CSS3 capable browsers*/position: absolute;left: 0;top: 0;width: 0;height: 0;background: silver;}
+.toplevelshadow{ /*shadow opacity for NON CSS3 capable browsers. Doesn't work in IE*/opacity: 0.8;}

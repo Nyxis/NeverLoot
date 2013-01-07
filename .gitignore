@@ -1,0 +1,8 @@
+# Propel directories
+lib/model/om/*
+lib/model/map/*
+
+# other filess
+config/databases.yml
+logs/*
+cache/*

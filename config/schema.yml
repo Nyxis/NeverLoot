@@ -1,0 +1,163 @@
+propel:
+  _attributes:
+    package: lib.model
+    defaultIdMethod: native
+  wow_attribution:
+    _attributes: { phpName: Attribution, idMethod: native }
+    id_attribution: { phpName: IdAttribution, type: INTEGER, primaryKey: true, autoIncrement: true, required: true }
+    tmp: { phpName: Tmp, type: BOOLEAN, size: '1', required: true, defaultValue: true }
+    prix: { phpName: Prix, type: FLOAT, required: true, defaultValue: '0' }
+    id_objet: { phpName: IdObjet, type: INTEGER, required: true, foreignTable: wow_objet, foreignReference: id_objet, onDelete: CASCADE, onUpdate: CASCADE }
+    id_soiree: { phpName: IdSoiree, type: INTEGER, required: true, foreignTable: wow_soiree, foreignReference: id_soiree, onDelete: CASCADE, onUpdate: CASCADE }
+    id_perso: { phpName: IdPerso, type: INTEGER, required: true, foreignTable: wow_perso, foreignReference: id_perso, onDelete: CASCADE, onUpdate: CASCADE }
+    _indexes: { fk_wow_attribution_wow_objet1: [id_objet], fk_wow_attribution_wow_soiree1: [id_soiree], fk_wow_attribution_wow_perso1: [id_perso] }
+  wow_boss:
+    _attributes: { phpName: Boss, idMethod: native }
+    id_boss: { phpName: IdBoss, type: INTEGER, primaryKey: true, autoIncrement: true, required: true }
+    id_raid: { phpName: IdRaid, type: INTEGER, required: true, foreignTable: wow_raid, foreignReference: id_raid, onDelete: CASCADE, onUpdate: CASCADE }
+    nom_fr: { phpName: NomFr, type: VARCHAR, size: '75', required: true }
+    nom_en: { phpName: NomEn, type: VARCHAR, size: '75', required: false }
+    ordre: { phpName: Ordre, type: INTEGER, required: true }
+    cadavre_fr: { phpName: CadavreFr, type: VARCHAR, size: '75', required: true }
+    cadavre_en: { phpName: CadavreEn, type: VARCHAR, size: '75', required: false }
+    image: { phpName: Image, type: VARCHAR, size: '255', required: false }
+    _indexes: { fk_wow_boss_wow_raid1: [id_raid] }
+  wow_classe:
+    _attributes: { phpName: Classe, idMethod: native }
+    id_classe: { phpName: IdClasse, type: INTEGER, primaryKey: true, autoIncrement: true, required: true }
+    code: { phpName: Code, type: VARCHAR, size: '45', required: true }
+    nom: { phpName: Nom, type: VARCHAR, size: '45', required: true }
+    id_armor_type: { phpName: IdArmorType, type: INTEGER, required: true }
+    image: { phpName: Image, type: VARCHAR, size: '255', required: true }
+  wow_compte:
+    _attributes: { phpName: Compte, idMethod: native }
+    id_compte: { phpName: IdCompte, type: INTEGER, primaryKey: true, autoIncrement: true, required: true }
+    login: { phpName: Login, type: VARCHAR, size: '45', required: true, index: unique }
+    password: { phpName: Password, type: VARCHAR, size: '45', required: true }
+    nb_raids: { phpName: NbRaids, type: FLOAT, required: true, defaultValue: '0' }
+    nb_loot: { phpName: NbLoot, type: FLOAT, required: true, defaultValue: '0' }
+    priorite: { phpName: Priorite, type: FLOAT, required: true, defaultValue: '0' }
+    id_ref_acces: { phpName: IdRefAcces, type: INTEGER, required: true, foreignTable: wow_ref_acces, foreignReference: id_ref_acces, onDelete: CASCADE, onUpdate: CASCADE }
+    _indexes: { fk_wow_compte_wow_ref_acces: [id_ref_acces] }
+  wow_objet:
+    _attributes: { phpName: Objet, idMethod: native }
+    id_objet: { phpName: IdObjet, type: INTEGER, primaryKey: true, autoIncrement: true, required: true }
+    ilevel: { phpName: Ilevel, type: INTEGER, required: true, defaultValue: '1' }
+    heroique: { phpName: Heroique, type: BOOLEAN, size: '1', required: true, defaultValue: false }
+    nom_fr: { phpName: NomFr, type: VARCHAR, size: '75', required: true }
+    nom_en: { phpName: NomEn, type: VARCHAR, size: '75', required: true }
+    image: { phpName: Image, type: VARCHAR, size: '75', required: true }
+    classes: { phpName: Classes, type: LONGVARCHAR, required: true }
+    json_source: { phpName: JsonSource, type: LONGVARCHAR, required: true }
+    id_source_objet: { phpName: IdSourceObjet, type: INTEGER, required: false, foreignTable: wow_source_objet, foreignReference: id_source_objet, onDelete: CASCADE, onUpdate: CASCADE }
+    id_armor_type: { phpName: IdArmorType, type: INTEGER, required: false }
+    id_slot1: { phpName: IdSlot1, type: INTEGER, required: false, foreignTable: wow_slot, foreignReference: id_slot, onDelete: CASCADE, onUpdate: CASCADE }
+    id_slot2: { phpName: IdSlot2, type: INTEGER, required: false, foreignTable: wow_slot, foreignReference: id_slot, onDelete: CASCADE, onUpdate: CASCADE }
+    _indexes: { fk_wow_objet_wow_source_objet1: [id_source_objet], fk_wow_objet_wow_slot1: [id_slot1], fk_wow_objet_wow_slot2: [id_slot2] }
+  wow_perso:
+    _attributes: { phpName: Perso, idMethod: native }
+    id_perso: { phpName: IdPerso, type: INTEGER, primaryKey: true, autoIncrement: true, required: true }
+    nom: { phpName: Nom, type: VARCHAR, size: '45', required: true }
+    is_main: { phpName: IsMain, type: BOOLEAN, size: '1', required: true, defaultValue: true }
+    id_compte: { phpName: IdCompte, type: INTEGER, required: true, foreignTable: wow_compte, foreignReference: id_compte, onDelete: CASCADE, onUpdate: CASCADE }
+    id_classe: { phpName: IdClasse, type: INTEGER, required: true, foreignTable: wow_classe, foreignReference: id_classe, onDelete: CASCADE, onUpdate: CASCADE }
+    id_spe1: { phpName: IdSpe1, type: INTEGER, required: true, foreignTable: wow_spe, foreignReference: id_spe, onDelete: CASCADE, onUpdate: CASCADE }
+    id_spe2: { phpName: IdSpe2, type: INTEGER, required: true, foreignTable: wow_spe, foreignReference: id_spe, onDelete: CASCADE, onUpdate: CASCADE }
+    _indexes: { fk_wow_perso_wow_compte1: [id_compte], fk_wow_perso_wow_classe1: [id_classe], fk_wow_perso_wow_spe1: [id_spe1], fk_wow_perso_wow_spe2: [id_spe2] }
+  wow_perso_soiree:
+    _attributes: { phpName: PersoSoiree, idMethod: native }
+    id_perso_soiree: { phpName: IdPersoSoiree, type: INTEGER, primaryKey: true, autoIncrement: true, required: true }
+    id_perso: { phpName: IdPerso, type: INTEGER, required: true, foreignTable: wow_perso, foreignReference: id_perso, onDelete: CASCADE, onUpdate: CASCADE }
+    id_statut_perso: { phpName: IdStatutPerso, type: INTEGER, required: true, foreignTable: wow_ref_statut_perso, foreignReference: id_ref_statut_perso, onDelete: CASCADE, onUpdate: CASCADE }
+    id_statut_admin: { phpName: IdStatutAdmin, type: INTEGER, required: true, foreignTable: wow_ref_statut_perso, foreignReference: id_ref_statut_perso, onDelete: CASCADE, onUpdate: CASCADE }
+    id_soiree: { phpName: IdSoiree, type: INTEGER, required: true, foreignTable: wow_soiree, foreignReference: id_soiree, onDelete: CASCADE, onUpdate: CASCADE }
+    id_role: { phpName: IdRole, type: INTEGER, required: false, foreignTable: wow_role, foreignReference: id_role, onDelete: CASCADE, onUpdate: CASCADE }
+    pts_soiree: { phpName: PtsSoiree, type: VARCHAR, sqlType: 'float unsigned zerofill', required: false }
+    pts_loot: { phpName: PtsLoot, type: VARCHAR, sqlType: 'float unsigned zerofill', required: false }
+    _indexes: { fk_wow_role_soiree_wow_perso1: [id_perso], fk_wow_role_soiree_wow_ref_statut_perso1: [id_statut_perso], fk_wow_role_soiree_wow_ref_statut_perso2: [id_statut_admin], fk_wow_role_soiree_wow_soiree1: [id_soiree], fk_wow_perso_soiree_wow_role1: [id_role] }
+  wow_raid:
+    _attributes: { phpName: Raid, idMethod: native }
+    id_raid: { phpName: IdRaid, type: INTEGER, primaryKey: true, autoIncrement: true, required: true }
+    id_zone: { phpName: IdZone, type: INTEGER, required: true }
+    nom_fr: { phpName: NomFr, type: VARCHAR, size: '45', required: true }
+    nom_en: { phpName: NomEn, type: VARCHAR, size: '45', required: true }
+    image: { phpName: Image, type: VARCHAR, size: '255', required: false }
+  wow_ref_acces:
+    _attributes: { phpName: RefAcces, idMethod: native }
+    id_ref_acces: { phpName: IdRefAcces, type: INTEGER, primaryKey: true, autoIncrement: true, required: true }
+    code_acces: { phpName: CodeAcces, type: VARCHAR, size: '10', required: true }
+  wow_ref_statut_perso:
+    _attributes: { phpName: RefStatutPerso, idMethod: native }
+    id_ref_statut_perso: { phpName: IdRefStatutPerso, type: INTEGER, primaryKey: true, autoIncrement: true, required: true }
+    code: { phpName: Code, type: VARCHAR, size: '45', required: true }
+    libelle: { phpName: Libelle, type: VARCHAR, size: '45', required: true }
+    coef: { phpName: Coef, type: FLOAT, required: true }
+    image: { phpName: Image, type: VARCHAR, size: '255', required: true }
+  wow_role:
+    _attributes: { phpName: Role, idMethod: native }
+    id_role: { phpName: IdRole, type: INTEGER, primaryKey: true, autoIncrement: true, required: true }
+    code: { phpName: Code, type: VARCHAR, size: '45', required: true }
+    libelle: { phpName: Libelle, type: VARCHAR, size: '45', required: true }
+    image: { phpName: Image, type: VARCHAR, size: '255', required: true }
+  wow_slot:
+    _attributes: { phpName: Slot, idMethod: native }
+    id_slot: { phpName: IdSlot, type: INTEGER, primaryKey: true, autoIncrement: true, required: true }
+    type_slot: { phpName: TypeSlot, type: VARCHAR, size: '45', required: true }
+    code_mrrobot: { phpName: CodeMrrobot, type: VARCHAR, size: '45', required: true }
+    libelle: { phpName: Libelle, type: VARCHAR, size: '45', required: true }
+    image: { phpName: Image, type: VARCHAR, size: '45', required: true }
+  wow_soiree:
+    _attributes: { phpName: Soiree, idMethod: native }
+    id_soiree: { phpName: IdSoiree, type: INTEGER, primaryKey: true, autoIncrement: true, required: true }
+    date: { phpName: Date, type: TIMESTAMP, required: true }
+    nom: { phpName: Nom, type: VARCHAR, size: '45', required: true }
+    description: { phpName: Description, type: LONGVARCHAR, required: true }
+    gain: { phpName: Gain, type: INTEGER, required: true, defaultValue: '1' }
+    etat: { phpName: Etat, type: INTEGER, required: true, defaultValue: '1' }
+    id_raid: { phpName: IdRaid, type: INTEGER, required: true, foreignTable: wow_raid, foreignReference: id_raid, onDelete: CASCADE, onUpdate: CASCADE }
+    _indexes: { fk_wow_soiree_wow_raid1: [id_raid] }
+  wow_soiree_boss:
+    _attributes: { phpName: SoireeBoss, idMethod: native }
+    id_soiree_boss: { phpName: IdSoireeBoss, type: INTEGER, primaryKey: true, autoIncrement: true, required: true }
+    id_boss: { phpName: IdBoss, type: INTEGER, required: true, foreignTable: wow_boss, foreignReference: id_boss, onDelete: CASCADE, onUpdate: CASCADE }
+    id_soiree: { phpName: IdSoiree, type: INTEGER, required: true, foreignTable: wow_soiree, foreignReference: id_soiree, onDelete: CASCADE, onUpdate: CASCADE }
+    dead: { phpName: Dead, type: BOOLEAN, size: '1', required: false, defaultValue: false }
+    _indexes: { fk_wow_soiree_boss_wow_boss1: [id_boss], fk_wow_soiree_boss_wow_soiree1: [id_soiree] }
+  wow_source_objet:
+    _attributes: { phpName: SourceObjet, idMethod: native }
+    id_source_objet: { phpName: IdSourceObjet, type: INTEGER, primaryKey: true, autoIncrement: true, required: true }
+    type: { phpName: Type, type: VARCHAR, size: '10', required: true }
+    id_type: { phpName: IdType, type: INTEGER, required: false }
+    code: { phpName: Code, type: VARCHAR, size: '45', required: false }
+  wow_spe:
+    _attributes: { phpName: Spe, idMethod: native }
+    id_spe: { phpName: IdSpe, type: INTEGER, primaryKey: true, autoIncrement: true, required: true }
+    nom: { phpName: Nom, type: VARCHAR, size: '45', required: true }
+    image: { phpName: Image, type: VARCHAR, size: '255', required: true }
+    id_classe: { phpName: IdClasse, type: INTEGER, required: true, foreignTable: wow_classe, foreignReference: id_classe, onDelete: CASCADE, onUpdate: CASCADE }
+    id_role: { phpName: IdRole, type: INTEGER, required: true, foreignTable: wow_role, foreignReference: id_role, onDelete: CASCADE, onUpdate: CASCADE }
+    _indexes: { fk_wow_spe_wow_classe1: [id_classe], fk_wow_spe_wow_role1: [id_role] }
+  wow_type_wishlist:
+    _attributes: { phpName: TypeWishlist, idMethod: native }
+    id_type_wishlist: { phpName: IdTypeWishlist, type: INTEGER, primaryKey: true, autoIncrement: true, required: true }
+    code: { phpName: Code, type: VARCHAR, size: '45', required: true }
+    ordre: { phpName: Ordre, type: INTEGER, required: true }
+    libelle: { phpName: Libelle, type: VARCHAR, size: '45', required: true }
+  wow_wishlist:
+    _attributes: { phpName: Wishlist, idMethod: native }
+    id_wishlist: { phpName: IdWishlist, type: INTEGER, primaryKey: true, autoIncrement: true, required: true }
+    nom: { phpName: Nom, type: VARCHAR, size: '45', required: true }
+    description: { phpName: Description, type: LONGVARCHAR, required: false }
+    ilevel_min: { phpName: IlevelMin, type: INTEGER, required: false }
+    ilevel_max: { phpName: IlevelMax, type: INTEGER, required: false }
+    id_perso: { phpName: IdPerso, type: INTEGER, required: true, foreignTable: wow_perso, foreignReference: id_perso, onDelete: CASCADE, onUpdate: CASCADE }
+    id_type_wishlist: { phpName: IdTypeWishlist, type: INTEGER, required: true, foreignTable: wow_type_wishlist, foreignReference: id_type_wishlist, onDelete: CASCADE, onUpdate: CASCADE }
+    _indexes: { fk_wow_wishlist_wow_perso1: [id_perso], fk_wow_wishlist_wow_type_wishlist1: [id_type_wishlist] }
+  wow_wishlist_objet:
+    _attributes: { phpName: WishlistObjet, idMethod: native }
+    id_wishlist_objet: { phpName: IdWishlistObjet, type: INTEGER, primaryKey: true, autoIncrement: true, required: true }
+    id_wishlist: { phpName: IdWishlist, type: INTEGER, required: true, foreignTable: wow_wishlist, foreignReference: id_wishlist, onDelete: CASCADE, onUpdate: CASCADE }
+    id_slot: { phpName: IdSlot, type: INTEGER, required: true, foreignTable: wow_slot, foreignReference: id_slot, onDelete: CASCADE, onUpdate: CASCADE }
+    id_attribution: { phpName: IdAttribution, type: INTEGER, required: false, foreignTable: wow_attribution, foreignReference: id_attribution, onDelete: 'SET NULL', onUpdate: CASCADE }
+    id_objet: { phpName: IdObjet, type: INTEGER, required: false, foreignTable: wow_objet, foreignReference: id_objet, onDelete: 'SET NULL', onUpdate: CASCADE }
+    _indexes: { fk_wow_wishlist_objet_wow_wishlist1: [id_wishlist], fk_wow_wishlist_objet_wow_slot1: [id_slot], fk_wow_wishlist_objet_wow_objet1: [id_objet], fk_wow_wishlist_objet_wow_attribution1: [id_attribution] }

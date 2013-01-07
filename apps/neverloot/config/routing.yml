@@ -1,0 +1,132 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/10-Routing
+
+# home de l'appli
+homepage:
+  url:   /
+  param: { module: home, action: index }
+
+import:
+  url: /import
+  param: { module: home, action: import }
+
+# --------------------------------------------------------------
+# module perso
+#---------------------------------------------------------------
+
+# fiche perso
+persoFiche:
+  url: /perso/fiche/:id_perso/:nom
+  param: { module: perso, action: fiche }
+
+# liste perso
+persoListe:
+  url: /perso/liste
+  param: { module: perso, action: liste }
+
+# édition perso
+persoEdit:
+  url: /perso/edit/:id
+  param: { module: perso, action: edit }
+
+# nouveau perso
+persoNew:
+  url: /perso/new
+  param: { module: perso, action: new }
+
+# suppression perso
+persoDelete:
+  url: /perso/delete/:id
+  param: { module: perso, action: delete, what: perso }
+
+# suppression compte
+persoCompteDelete:
+  url: /compte/delete/:id
+  param: { module: perso, action: delete, what: compte }
+
+
+# --------------------------------------------------------------
+# module wishlist
+#---------------------------------------------------------------
+
+# édition d'un objet de wishlist
+# ajout/suppression des loots
+wishlistEditObjet:
+  url: /wishlist/edit/item
+  param: { module: wishlist, action: editObjet }
+
+# edition des wishlists
+wishlistEdit:
+  url: /wishlist/edit
+  param: { module: wishlist, action: edit }
+
+# import des wishlists
+wishlistImport:
+  url: /wishlist/import
+  param: { module: wishlist, action: import }
+
+
+
+# --------------------------------------------------------------
+# raid
+# --------------------------------------------------------------
+raidNew:
+  url: /raid/new
+  param: { module: raid, action: new }
+
+raidEdit:
+  url: /raid/edit/:id
+  param: { module: raid, action: edit }
+
+raidEditSubmit:
+  url: /raid/edit
+  param: { module: raid, action: edit }
+
+raidFiche:
+  url: /raid/:id
+  param: { module: raid, action: fiche }
+
+raidExport:
+  url: /raid/export/:id
+  param: { module: raid, action: export }
+
+raidAddItem:
+  url: /item/add
+  param: { module: raid, action: addLoot }
+
+raidRemoveItem:
+  url: /item/remove
+  param: { module: raid, action: removeLoot }
+
+raidClose:
+  url: /raid/close/:id_soiree
+  param: { module: raid, action: close }
+
+# --------------------------------------------------------------
+# login / register
+# --------------------------------------------------------------
+
+# login
+login:
+  url: /login
+  params: { module: home, action: login }
+
+# register
+register:
+  url: /register
+  params: { module: home, action: register }
+
+# --------------------------------------------------------------
+# composants via ajax
+# --------------------------------------------------------------
+perso:
+  url: /perso/:component
+  param: { module: perso, action: ajaxComponent }
+
+perso:
+  url: /wishlist/:component
+  param: { module: wishlist, action: ajaxComponent }
+
+raid:
+  url: /raid/:component
+  param: { module: raid, action: ajaxComponent }

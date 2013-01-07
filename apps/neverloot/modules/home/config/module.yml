@@ -1,0 +1,29 @@
+all:
+  components:
+    menu:
+      home:
+        route: homepage
+        img: picto_home.png
+      roster:
+        # route: liste_persos
+        txt: Roster&nbsp;&nbsp;
+        children:
+          liste:
+            route: persoListe
+            txt: Liste
+          fiche:
+            txt: Mes persos
+            children:
+      calendrier:
+        txt: Calendrier
+        children:
+          next:
+            txt: Prochains raids
+            children:
+          prev:
+            txt: Raids terminés
+            children:
+          new:
+            txt: Nouveau raid
+            route: raidNew
+            credential: admin
