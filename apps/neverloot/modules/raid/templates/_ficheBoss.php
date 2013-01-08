@@ -4,8 +4,11 @@
     </div>
     <div class="nl_box_content acc_content" <?php accordion_target('nl_boss_liste', false); ?>>
         <div class="nl_box_body">
+            <?php $imageBoss = $boss->getImage(); ?>
             <div class="bossBanner transition">
-                <?php echo image_tag('raids/boss/'.$boss->getImage(), array('class' => $displayHm ? 'hm' : '')); ?>
+                <?php if (!empty($imageBoss)): ?>
+                    <?php echo image_tag('raids/boss/'.$boss->getImage(), array('class' => $displayHm ? 'hm' : '')); ?>
+                <?php endif ?>
             </div>
             <?php foreach($itemLists as $difficulty => $listeObjets) : ?>
 

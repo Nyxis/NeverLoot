@@ -184,7 +184,7 @@ class wishlistComponents extends sfActions
             'range'  => true,
             'min'    => 476,
             'max'    => 516,
-            'values' => array(489, 502),
+            'values' => array(476, 496),
         );
 
         $this->edit = !$this->wishlist->isNew();

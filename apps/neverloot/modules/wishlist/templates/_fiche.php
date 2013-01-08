@@ -88,7 +88,7 @@
                     <div class="nl_box_body">
                         <input type="hidden" name="id_wishlist" value="<?php echo $wishlist->getIdWishlist(); ?>" />
                         <textarea name="importData" id="importData" cols="45" rows="10"></textarea>
-                        <label for="importData">Collez ci dessus le tableau de BiS de <a href="http://www.askmrrobot.com/wow/gear" target="_blank">Askmrrobot</a>.</label>
+                        <label for="importData">Collez ci dessus l'export SimulationCraft de <a href="http://www.askmrrobot.com/wow/gear" target="_blank">Askmrrobot</a>.</label>
                     </div>
                     <div class="nl_box_footer">
                         <div class="nl_box_valign_wrap">

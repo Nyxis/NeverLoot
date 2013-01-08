@@ -97,7 +97,7 @@ class wishlistActions extends nlActions
         // contruction de regex de capture à partir des slots
         $mapRegex = array();
         foreach ($listeSlots as $typeSlot => $slot) {
-            $mapRegex[$emplacement] = '/'.$typeSlot.'=[a-z_]+,id=([0-9]+)/';
+            $mapRegex[$typeSlot] = '/'.$typeSlot.'=[a-z_]+,id=([0-9]+)/';
         }
 
         foreach ($mapRegex as $typeSlot => $regex) {
@@ -121,57 +121,6 @@ class wishlistActions extends nlActions
             'nom' => $perso->getNom()
         ));
     }
-
-
-// old import
-/*
-        $rs = '';
-        foreach (explode("\n", $importData) as $line) {
-            if(!strlen(trim($line)))
-                continue;
-
-            $rs .= $line.'#';
-        }
-
-        $tableItems = array();
-
-        // contruction de regex de capture à partir des slots
-        $mapRegex = array();
-        foreach ($listeSlots as $emplacement => $slot) {
-            $mapRegex[$emplacement] = '/'.$emplacement.'\#'
-                .'\(([0-9]+)\)' // ilvl
-                .' ([^\#]+)\#'  // nom
-                .'(([^\#]+) - ([^\#]+))?' // drop
-                .'\#/';
-        }
-
-        foreach ($mapRegex as $emplacement => $regex) {
-            if(!preg_match($regex, $rs, $matchesLine))
-                continue;
-
-            $infos = array(
-                'ilvl' => $matchesLine[1],
-                'nom_objet' => $matchesLine[2],
-                'location' => isset($matchesLine[4]) ? $matchesLine[4] : 'World',
-                'zone' => isset($matchesLine[5]) ? trim($matchesLine[5], '#') : 'Dragon Soul'
-            );
-
-            $item = ObjetQuery::create()
-                ->filterByNomEn($infos['nom_objet'])
-                ->filterByIlevel($infos['ilvl'])
-                ->findOne();
-
-            if(!$item)
-                continue;
-
-            $wishlist->addItem( // ajout à la wl
-                $item, $listeSlots[$emplacement]
-            );
-        }
-*/
-
-
-
 
     /**
      * action d'édition d'un objet

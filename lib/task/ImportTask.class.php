@@ -27,8 +27,9 @@ class ImportTask extends sfBaseTask
         $databaseManager = new sfDatabaseManager($this->configuration);
         $connection = $databaseManager->getDatabase($options['connection'])->getConnection();
 
-        // for ($i = 79327; $i < 90000; $i++) {
-        // for ($i = 90000; $i < 95000; $i++) {
+        // // for ($i = 79327; $i < 90000; $i++) {
+        // for ($i = 90915; $i < 95000; $i++) {
+        // // for ($i = 95000; $i < 100000; $i++) {
         //     try {
         //         $objet = new Objet();
         //         $objet->setIdObjet($i);
@@ -52,7 +53,7 @@ class ImportTask extends sfBaseTask
             8 => array(8, null), // boots
             9 => array(9, null), // bacers
             10 => array(10, null), // gloves
-            16 => array(16, null), // back
+            16 => array(15, null), // back
 
             11 => array(11, 12), // rings
             12 => array(13, 14), // trinket
@@ -91,10 +92,15 @@ class ImportTask extends sfBaseTask
 
         // SourceObjetQuery::create()->deleteAll();
 
-        $itemList = ObjetQuery::create()->find();
+        $itemList = ObjetQuery::create()
+            // ->filterByIdObjet(90915, Criteria::GREATER_EQUAL)
+            ->find();
+
         foreach ($itemList as $item) {
             try {
                 // $item->setJsonSource('{'.$item->getJsonSource().'}');
+                // $item->save();
+
                 $jsonSource = json_decode($item->getJsonSource(), true);
                 $item->setHeroique(isset($jsonSource['heroic']));
 
