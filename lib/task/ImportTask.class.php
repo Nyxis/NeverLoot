@@ -24,8 +24,236 @@ class ImportTask extends sfBaseTask
 
     protected function execute($arguments = array(), $options = array())
     {
+        $databaseManager = new sfDatabaseManager($this->configuration);
+        $connection = $databaseManager->getDatabase($options['connection'])->getConnection();
 
-        simplexml_load_file('http://fr.wowhead.com/item=76342&xml');
+        // for ($i = 79327; $i < 90000; $i++) {
+        // for ($i = 90000; $i < 95000; $i++) {
+        //     try {
+        //         $objet = new Objet();
+        //         $objet->setIdObjet($i);
 
+        //         $objet->import(array('min_ilvl' => 476));
+        //         $objet->save();
+
+        //         echo 'item+ >> '.$i.' : '.$objet->getNomFr().' ('.$objet->getIlevel().')'."\n";
+        //     } catch (Exception $e) {
+        //         echo 'error >> '.$i.' : '.$e->getMessage()."\n";
+        //     }
+        // }
+
+        $slotmap = array(
+            1 => array(1, null), // helm
+            2 => array(2, null), // neck
+            3 => array(3, null), // shoulders
+            5 => array(5, null), // chest
+            6 => array(6, null), // belt
+            7 => array(7, null), // legs
+            8 => array(8, null), // boots
+            9 => array(9, null), // bacers
+            10 => array(10, null), // gloves
+            16 => array(16, null), // back
+
+            11 => array(11, 12), // rings
+            12 => array(13, 14), // trinket
+
+            23 => array(17, null), // off hand
+            14 => array(17, null), // shields
+
+            17 => array(16, null), // 2M
+            13 => array(16, null), // 1M
+            15 => array(16, null), // Wands
+            21 => array(16, null), // Right Hand
+        );
+
+        $tokenmap = array(
+            64   => 'Chaman',
+            32   => 'Chevalier de la mort',
+            1024 => 'Druide',
+            8    => 'Voleur',
+            4    => 'Chasseur',
+            2    => 'Paladin',
+            1    => 'Guerrier',
+            128  => 'Mage',
+            256  => 'Démoniste',
+            16   => 'Prêtre',
+            512  => 'Moine',
+
+            1192 => 'Voleur//Mage//Chevalier de la mort//Druide',
+            581  => 'Chaman//Guerrier//Chasseur//Moine',
+            274  => 'Prêtre//Paladin//Démoniste'
+        );
+
+        $mapRaids = nlMisc::indexBy('IdZone', RaidQuery::create()->find());
+        $metaZones = array(
+            5805 => 12
+        );
+
+        // SourceObjetQuery::create()->deleteAll();
+
+        $itemList = ObjetQuery::create()->find();
+        foreach ($itemList as $item) {
+            try {
+                // $item->setJsonSource('{'.$item->getJsonSource().'}');
+                $jsonSource = json_decode($item->getJsonSource(), true);
+                $item->setHeroique(isset($jsonSource['heroic']));
+
+                // class specific
+                $item->setClasses('');
+                if (isset($jsonSource['reqclass']) && isset($tokenmap[$jsonSource['reqclass']])) {
+                    $item->setClasses($tokenmap[$jsonSource['reqclass']]);
+                }
+
+                // slot
+                if (isset($slotmap[$jsonSource['slot']])) {
+                    list($slot1, $slot2) = $slotmap[$jsonSource['slot']];
+                    $item->setIdSlot1($slot1);
+                    $item->setIdSlot2($slot2);
+                }
+
+                if ($jsonSource['subclass'] <= 4 && $jsonSource['subclass'] >= 1) {
+                    $item->setIdArmorType($jsonSource['subclass']);
+                }
+
+                $item->save();
+
+                if (isset($sourceObj)) {
+                    unset($sourceObj);
+                }
+
+                // source
+                if (isset($jsonSource['source'])) {
+
+                    $source = (array) $jsonSource['source'];
+                    $source = in_array(5, $source) ? 5 : array_pop($source);
+
+                    // -----------------------------------------------------------
+                    // 5: marchands
+                    // -----------------------------------------------------------
+                    if ($source == 5) {
+
+                        // objet vendu en vaillances ou quête par défaut
+                        $sourceObj = $this->createSource('Vaillances', null, 'achat');
+
+                        $mapLibToken = array(
+                            1 => array('Couronne%', 'Heaume%'),
+                            3 => array('Epaulières%', 'Mantelet%'),
+                            5 => array('Plastron%'),
+                            7 => array('Jambières%'),
+                            10 => array('Gantelets%')
+                        );
+
+                        // token -> objet à classe définie
+                        if (!empty($jsonSource['reqclass']) && !empty($mapLibToken[$jsonSource['slot']])) {
+
+                            // on retrouve le token
+                            $token = ObjetQuery::create()
+                                ->condition('ilevel', 'Objet.Ilevel = ?', $jsonSource['level'])
+                                ->condition('slot', 'Objet.IdSlot1 IS NULL', null)
+                                ->condition('classes', 'Objet.Classes LIKE ?', '%'.$item->getClasses().'%')
+                                ->combine(array('ilevel', 'slot', 'classes'), 'and', 'base');
+
+                            $cond = array();
+                            foreach ($mapLibToken[$jsonSource['slot']] as $key => $namePart) {
+                                $condName = $jsonSource['slot'].'_'.$key;
+                                $token = $token->condition($condName, 'Objet.NomFr LIKE ?', $namePart);
+                                $cond[] = $condName;
+                            }
+
+                            $token = $token
+                                ->combine($cond, 'or', 'nom')
+                                ->where(array('base', 'nom'), 'and')
+                                ->findOne();
+
+                            if (!empty($token)) {
+                                $sourceObj = $this->createSource('Objet', $token->getIdObjet(), 'token');
+                            }
+                        }
+                    }
+
+                    // -----------------------------------------------------------
+                    // 2: raids
+                    // -----------------------------------------------------------
+                    if ($source == 2) {
+                        if (empty($jsonSource['sourcemore'])) {
+                            throw new Exception('Pas de sourcemore');
+                        }
+
+                        $sourcemore = $jsonSource['sourcemore'][0];
+                        if (empty($sourcemore['z'])) {
+                            throw new Exception('Pas de zone');
+                        }
+
+                        $zone = $sourcemore['z'];
+                        if (empty($mapRaids[$zone])) {
+                            if (isset($metaZones[$zone])) {
+                                $zone = $metaZones[$zone];
+                            } else {
+                                throw new Exception(sprintf('Raid non supporte : %s', $zone));
+                            }
+                        }
+
+                        // boss
+                        if (!empty($sourcemore['n'])) {
+
+                            // on cherche le boss dans le raid
+                            $bossList = $mapRaids[$zone]->getBosss(
+                                BossQuery::create()->filterByCadavreFr('%'.$sourcemore['n'].'%', Criteria::LIKE)
+                            );
+
+                            if ($bossList->isEmpty()) {
+                                throw new Exception(sprintf('Boss inconnu : %s', $sourcemore['n']));
+                            }
+
+                            $sourceObj = $this->createSource('Boss', $bossList->getFirst()->getIdBoss(), 'boss');
+                        } else {
+                            // loot partagé
+                            if (!empty($sourcemore['bd']) || !empty($sourcemore['dd'])) {
+                                $sourceObj = $this->createSource('Raid', $mapRaids[$zone]->getIdRaid(), 'zone');
+                            }
+
+                            // trash loot
+                            if (count($sourcemore) == 1) {
+                                $sourceObj = $this->createSource('Raid', $mapRaids[$zone]->getIdRaid(), 'trashs');
+                            }
+                        }
+                    }
+
+                    // -----------------------------------------------------------
+                    // 1,4 : craft et quêtes
+                    // -----------------------------------------------------------
+                    if ($source == 1 || $source == 4) {
+                        $sourceObj = $this->createSource('Craft', null, 'craft');
+                    }
+
+                    if (!empty($sourceObj)) {
+                        $item->setSourceObjet($sourceObj);
+                        $item->save();
+                    }
+                }
+
+            } catch (Exception $e) {
+                echo sprintf("error >> %s : %s (%s) -> %s\n",
+                    $item->getIdObjet(),
+                    $item->getNomFr(),
+                    $item->getIlevel(),
+                    $e->getMessage()
+                );
+
+                continue;
+            }
+        }
+    }
+
+    /**
+     *
+     */
+    protected function createSource($type, $idType, $code)
+    {
+        return SourceObjetQuery::create()
+            ->filterByType($type)
+            ->filterByIdType($idType)
+            ->filterByCode($code)
+            ->findOneOrCreate();
     }
 }

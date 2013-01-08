@@ -89,12 +89,42 @@ class wishlistActions extends nlActions
 
         // liste des slots
         $listeSlots = SlotQuery::create()->find();
-        $listeSlots = nlMisc::indexBy('codeMrrobot', $listeSlots);
+        $listeSlots = nlMisc::indexBy('TypeSlot', $listeSlots);
 
         // lancement du parsing
         $importData = $request->getParameter('importData', '');
-        $importData = str_replace("\r",'', $importData);
 
+        // contruction de regex de capture à partir des slots
+        $mapRegex = array();
+        foreach ($listeSlots as $typeSlot => $slot) {
+            $mapRegex[$emplacement] = '/'.$typeSlot.'=[a-z_]+,id=([0-9]+)/';
+        }
+
+        foreach ($mapRegex as $typeSlot => $regex) {
+            if (!preg_match($regex, $importData, $matches)) {
+                continue;
+            }
+
+            $item = ObjetQuery::create()->findPk($matches[1]);
+            if (!$item) {
+                continue;
+            }
+
+            $wishlist->addItem( // ajout à la wl
+                $item, $listeSlots[$typeSlot]
+            );
+        }
+
+        $perso = $wishlist->getPerso();
+        $this->redirect('persoFiche', array(
+            'id_perso' => $perso->getIdPerso(),
+            'nom' => $perso->getNom()
+        ));
+    }
+
+
+// old import
+/*
         $rs = '';
         foreach (explode("\n", $importData) as $line) {
             if(!strlen(trim($line)))
@@ -138,13 +168,10 @@ class wishlistActions extends nlActions
                 $item, $listeSlots[$emplacement]
             );
         }
+*/
 
-        $perso = $wishlist->getPerso();
-        $this->redirect('persoFiche', array(
-            'id_perso' => $perso->getIdPerso(),
-            'nom' => $perso->getNom()
-        ));
-    }
+
+
 
     /**
      * action d'édition d'un objet

@@ -275,22 +275,60 @@ class Objet extends BaseObjet
     }
 
     /**
+     * renvoie les données de wowhead dans la langue demandée
+     * @param  string           $lng
+     * @return SimpleXmlElement
+     */
+    public function getWowheadData($lng)
+    {
+        $ch = curl_init();
+        curl_setopt_array ($ch , array(
+            CURLOPT_URL            => 'http://'.$lng.'.wowhead.com/item='.$this->getIdObjet().'&xml',
+            CURLOPT_RETURNTRANSFER => true,
+
+            // CURLOPT_HTTPPROXYTUNNEL=> true,
+            // CURLOPT_PROXY          => 'vi-proxy'
+        ));
+
+        return simplexml_load_string(curl_exec($ch))->item;
+    }
+
+    /**
      * fonction d'import des noms d'objets
      * @param string lng
+     * @deprecated
      */
-    protected function importTraduction($lng)
+    public function importTraduction($lng)
     {
-        $pageWowhead = file_get_contents(
-            'http://'.$lng.'.wowhead.com/item='.$this->getIdObjet()
-        );
+        $pageWowhead = $this->getWowheadData($lng);
 
-        if (preg_match('#<h1>(.+) - Objet - World of Warcraft</h1>#', $pageWowhead, $matches)) {
-            return $matches[1];
-        } elseif (preg_match('#<h1>([\w -_\']+) - Item - World of Warcraft</h1>#', $pageWowhead, $matches)) {
-            return $matches[1];
+        return (string) $pageWowhead->name;
+    }
+
+    /**
+     * importe les données de l'objet à partir des configs en paramètre
+     * @param array $config tableau de config ('min_ilvl')
+     */
+    public function import($config)
+    {
+        $pageWowheadFr = $this->getWowheadData('fr');
+
+        $nameFr = (string) $pageWowheadFr->name;
+        if (empty($nameFr)) {
+            throw new Exception('Pas de nom');
         }
+        $this->setNomFr($nameFr);
 
-        return null;
+        $ilvl = (int) $pageWowheadFr->level;
+        if (empty($ilvl) || $ilvl < $config['min_ilvl']) {
+            throw new Exception('Ilvl incorrect : '.$ilvl);
+        }
+        $this->setIlevel($ilvl);
+
+        $this->setImage((string) $pageWowheadFr->icon);
+        $this->setJsonSource((string) $pageWowheadFr->json);
+
+        return $this;
     }
 
 } // Objet

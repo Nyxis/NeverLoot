@@ -41,7 +41,7 @@ propel:
     _indexes: { fk_wow_compte_wow_ref_acces: [id_ref_acces] }
   wow_objet:
     _attributes: { phpName: Objet, idMethod: native }
-    id_objet: { phpName: IdObjet, type: INTEGER, primaryKey: true, autoIncrement: true, required: true }
+    id_objet: { phpName: IdObjet, type: INTEGER, primaryKey: true, autoIncrement: false, required: true }
     ilevel: { phpName: Ilevel, type: INTEGER, required: true, defaultValue: '1' }
     heroique: { phpName: Heroique, type: BOOLEAN, size: '1', required: true, defaultValue: false }
     nom_fr: { phpName: NomFr, type: VARCHAR, size: '75', required: true }
@@ -49,10 +49,10 @@ propel:
     image: { phpName: Image, type: VARCHAR, size: '75', required: true }
     classes: { phpName: Classes, type: LONGVARCHAR, required: true }
     json_source: { phpName: JsonSource, type: LONGVARCHAR, required: true }
-    id_source_objet: { phpName: IdSourceObjet, type: INTEGER, required: false, foreignTable: wow_source_objet, foreignReference: id_source_objet, onDelete: CASCADE, onUpdate: CASCADE }
+    id_source_objet: { phpName: IdSourceObjet, type: INTEGER, required: false, foreignTable: wow_source_objet, foreignReference: id_source_objet, onDelete: SET NULL, onUpdate: SET NULL }
     id_armor_type: { phpName: IdArmorType, type: INTEGER, required: false }
-    id_slot1: { phpName: IdSlot1, type: INTEGER, required: false, foreignTable: wow_slot, foreignReference: id_slot, onDelete: CASCADE, onUpdate: CASCADE }
-    id_slot2: { phpName: IdSlot2, type: INTEGER, required: false, foreignTable: wow_slot, foreignReference: id_slot, onDelete: CASCADE, onUpdate: CASCADE }
+    id_slot1: { phpName: IdSlot1, type: INTEGER, required: false, foreignTable: wow_slot, foreignReference: id_slot, onDelete: SET NULL, onUpdate: SET NULL }
+    id_slot2: { phpName: IdSlot2, type: INTEGER, required: false, foreignTable: wow_slot, foreignReference: id_slot, onDelete: SET NULL, onUpdate: SET NULL }
     _indexes: { fk_wow_objet_wow_source_objet1: [id_source_objet], fk_wow_objet_wow_slot1: [id_slot1], fk_wow_objet_wow_slot2: [id_slot2] }
   wow_perso:
     _attributes: { phpName: Perso, idMethod: native }
@@ -103,7 +103,6 @@ propel:
     _attributes: { phpName: Slot, idMethod: native }
     id_slot: { phpName: IdSlot, type: INTEGER, primaryKey: true, autoIncrement: true, required: true }
     type_slot: { phpName: TypeSlot, type: VARCHAR, size: '45', required: true }
-    code_mrrobot: { phpName: CodeMrrobot, type: VARCHAR, size: '45', required: true }
     libelle: { phpName: Libelle, type: VARCHAR, size: '45', required: true }
     image: { phpName: Image, type: VARCHAR, size: '45', required: true }
   wow_soiree:
