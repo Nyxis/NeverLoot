@@ -7,9 +7,10 @@ propel:
     id_attribution: { phpName: IdAttribution, type: INTEGER, primaryKey: true, autoIncrement: true, required: true }
     tmp: { phpName: Tmp, type: BOOLEAN, size: '1', required: true, defaultValue: true }
     prix: { phpName: Prix, type: FLOAT, required: true, defaultValue: '0' }
+    disenchant: { phpName: Disenchant, type : BOOLEAN, size: '1', required: true, defaultValue: false }
     id_objet: { phpName: IdObjet, type: INTEGER, required: true, foreignTable: wow_objet, foreignReference: id_objet, onDelete: CASCADE, onUpdate: CASCADE }
     id_soiree: { phpName: IdSoiree, type: INTEGER, required: true, foreignTable: wow_soiree, foreignReference: id_soiree, onDelete: CASCADE, onUpdate: CASCADE }
-    id_perso: { phpName: IdPerso, type: INTEGER, required: true, foreignTable: wow_perso, foreignReference: id_perso, onDelete: CASCADE, onUpdate: CASCADE }
+    id_perso: { phpName: IdPerso, type: INTEGER, required: false, foreignTable: wow_perso, foreignReference: id_perso, onDelete: CASCADE, onUpdate: CASCADE }
     _indexes: { fk_wow_attribution_wow_objet1: [id_objet], fk_wow_attribution_wow_soiree1: [id_soiree], fk_wow_attribution_wow_perso1: [id_perso] }
   wow_boss:
     _attributes: { phpName: Boss, idMethod: native }
@@ -36,7 +37,7 @@ propel:
     password: { phpName: Password, type: VARCHAR, size: '45', required: true }
     nb_raids: { phpName: NbRaids, type: FLOAT, required: true, defaultValue: '0' }
     nb_loot: { phpName: NbLoot, type: FLOAT, required: true, defaultValue: '0' }
-    priorite: { phpName: Priorite, type: FLOAT, required: true, defaultValue: '0' }
+    priorite: { phpName: Priorite, type: FLOAT, required: true, defaultValue: '10' }
     id_ref_acces: { phpName: IdRefAcces, type: INTEGER, required: true, foreignTable: wow_ref_acces, foreignReference: id_ref_acces, onDelete: CASCADE, onUpdate: CASCADE }
     _indexes: { fk_wow_compte_wow_ref_acces: [id_ref_acces] }
   wow_objet:
@@ -82,6 +83,7 @@ propel:
     nom_fr: { phpName: NomFr, type: VARCHAR, size: '45', required: true }
     nom_en: { phpName: NomEn, type: VARCHAR, size: '45', required: true }
     image: { phpName: Image, type: VARCHAR, size: '255', required: false }
+    inv_ordre: { phpName: OrdreInverse, type: INTEGER, required: true, default: 0 }
   wow_ref_acces:
     _attributes: { phpName: RefAcces, idMethod: native }
     id_ref_acces: { phpName: IdRefAcces, type: INTEGER, primaryKey: true, autoIncrement: true, required: true }

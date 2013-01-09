@@ -12,7 +12,7 @@
                 <td class="nb">&nbsp;<?php echo $item->getNbAttributions(); ?></td>
             </tr><tr>
                 <td class="lib">Nb Désenchantement : </td>
-                <td class="nb">&nbsp;<?php echo 0; ?></td>
+                <td class="nb">&nbsp;<?php echo $item->getNbDisenchant(); ?></td>
             </tr></table>
         </div>
     </div>
@@ -53,8 +53,14 @@
 <?php elseif($nobody) : ?>
     <div class="nl_box_footer">
         <div class="nl_box_valign_wrap">
-            <div><?php echo image_tag('pictos/back.png'); ?></div>
-            <div>Au désenchantement</div>
+            <?php $urlRecycle = url_for2('raidRecycleLoot', array('disenchant' => 0)); ?>
+            <div><?php echo image_tag('pictos/wl_spe1.png'); ?></div>
+            <div><a href="<?php echo $urlRecycle; ?>" rel="<?php echo $item->getIdObjet(); ?>" class="manage_item">Attribuer</a></div>
+        </div>
+        <div class="nl_box_valign_wrap">
+            <?php $urlRecycle = url_for2('raidRecycleLoot', array('disenchant' => 0)); ?>
+            <div><?php echo image_tag('pictos/dez.png'); ?></div>
+            <div><a href="<?php echo $urlRecycle; ?>" rel="<?php echo $item->getIdObjet(); ?>" class="manage_item">Désenchanter</a></div>
         </div>
     </div>
 <?php endif; ?>

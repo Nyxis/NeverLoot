@@ -161,15 +161,11 @@ initGestionLoot = function() {
         e.preventDefault();
 
         var listIdWlObjet = "[";
-        var vide = true;
         $(this).parents('.nl_box_content').find('input:checked').each(function(index, e){
             if(index > 0) listIdWlObjet += ',';
             listIdWlObjet += $(e).attr('name');
-            vide = false;
         });
         listIdWlObjet += "]";
-
-        if(vide) return true;
 
         var idObjet = $(this).attr('rel');
 
@@ -177,7 +173,8 @@ initGestionLoot = function() {
             type: "POST",
             data: {
                 "liste_id_wl_objet": listIdWlObjet,
-                "id_soiree": idSoiree
+                "id_soiree": idSoiree,
+                "id_objet" : $(this).attr('rel')
             },
             success: function(data) {
                 $('.gestion_loot').after(data).remove();

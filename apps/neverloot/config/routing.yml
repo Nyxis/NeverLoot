@@ -20,9 +20,12 @@ persoFiche:
   param: { module: perso, action: fiche }
 
 # liste perso
-persoListe:
-  url: /perso/liste
-  param: { module: perso, action: liste }
+persoListeChampions:
+  url: /perso/liste/champions
+  param: { module: perso, action: listeChampions }
+persoListeMembres:
+  url: /perso/liste/membres
+  param: { module: perso, action: listeMembres }
 
 # édition perso
 persoEdit:
@@ -97,6 +100,10 @@ raidAddItem:
 raidRemoveItem:
   url: /item/remove
   param: { module: raid, action: removeLoot }
+
+raidRecycleLoot:
+  url: /item/dispell/:disenchant
+  param: { module: raid, action: recycleLoot }
 
 raidClose:
   url: /raid/close/:id_soiree

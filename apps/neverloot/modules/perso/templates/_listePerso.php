@@ -1,14 +1,14 @@
 <?php $edit = $sf_user->isAdmin(); ?>
 <div id="roster" class="<?php echo $edit ? 'nl_box_tbf' : 'nl_box_tb'; ?>">
     <div class="nl_box_header collapser" <?php collapser('nl_liste_perso'); ?>>
-        <span class="title">Membres du raid</span>
+        <span class="title"><?php echo $title ?></span>
     </div>
     <div class="nl_box_content collapsible" <?php collapsible('nl_liste_perso'); ?>>
         <div class="nl_box_body nl_box_font">
             <div class="listePersos">
-            <?php foreach($listeMainsActifs as $perso): ?>
+            <?php foreach($listePerso as $index => $perso): ?>
                 <?php $compte = $perso->getCompte(); ?>
-                <div class="perso <?php echo $perso->isMain() ? 'main' : 'reroll' ?>">
+                <div class="perso <?php echo $perso->isMain() ? 'main' : 'reroll'?> <?php echo ($index % 2) ? 'odd' : 'even' ?>">
                     <div>
                         <?php if($edit && $perso->isMain()): ?>
                             <input type="checkbox" />

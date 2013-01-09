@@ -9,8 +9,15 @@ all:
         txt: Roster&nbsp;&nbsp;
         children:
           liste:
-            route: persoListe
+            route: persoListeChampions
             txt: Liste
+            children:
+              champions:
+                route: persoListeChampions
+                txt: Champions
+              membres:
+                route: persoListeMembres
+                txt: Membres
           fiche:
             txt: Mes persos
             children:

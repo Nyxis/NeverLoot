@@ -416,8 +416,9 @@ select { width: 212px; cursor: pointer; }
 ** roster
 **---------------------------------------------------------------*/
 
+#roster .perso.odd { background-color: #111; }
 #roster .perso > * { display:inline-block; vertical-align: middle; margin-left:10px; margin-right:10px; width:150px;}
-#roster .main { margin-top:10px; }
+#roster .main { padding-top:5px; padding-bottom:5px; }
 #roster .reroll { margin-left:46px; }
 
 #roster .perso > div:first-child { width: 20px; margin-right:0px; }

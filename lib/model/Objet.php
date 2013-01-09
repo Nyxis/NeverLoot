@@ -120,16 +120,31 @@ class Objet extends BaseObjet
         return json_encode($return);
     }
 
-    /** nombre d'attribution de cet objet */
-    protected $nbAttributions = 0;
-
     /**
-     * renvoei le nombre d'attributions de cet objet
+     * renvoie le nombre d'attributions de cet objet
      * @return int
      */
     public function getNbAttributions()
     {
-        return $this->nbAttributions;
+        return AttributionQuery::create()
+            ->select(array('id_attribution'))
+            ->filterByDisenchant(false)
+            ->filterByIdSoiree(null, Criteria::ISNOTNULL)
+            ->filterByIdObjet($this->getIdObjet())
+            ->count();
+    }
+
+    /**
+     * renvoie le nombre de désenchantements de l'objet
+     * @return int
+     */
+    public function getNbDisenchant()
+    {
+        return AttributionQuery::create()
+            ->select(array('id_attribution'))
+            ->filterByDisenchant(true)
+            ->filterByIdObjet($this->getIdObjet())
+            ->count();
     }
 
     //---------------------------------------------------------------

@@ -210,6 +210,33 @@ class raidActions extends nlActions
     }
 
     /**
+     * action de recyclage d'un objet (dez - attrib non bis)
+     * @param sfWebRequest $request requete courante
+     */
+    public function executeRecycleLoot($request)
+    {
+        $this->forward404Unless(
+            $request->hasParameter('id_objet')
+            && $request->isXmlHttpRequest()
+        );
+
+        $objet = ObjetQuery::create()->findPk($request->getParameter('id_objet'));
+        if (!$objet) {
+            $this->forwardComponent('gestionLoot');
+        }
+
+        $attribution = new Attribution();
+        $attribution->setTmp(false);
+        $attribution->setIdObjet($objet->getIdObjet());
+        $attribution->setIdSoiree($request->getParameter('id_soiree', null));
+        $attribution->setDisenchant($request->getParameter('disenchant', null));
+        $attribution->save();
+
+        $request->setParameter('current_item', $objet);
+        $this->forwardComponent('gestionLoot');
+    }
+
+    /**
      * action de fermeture d'une soirée
      * crédite les raids, valide les loots
      * @param sfWebRequest $request requete courante
@@ -260,213 +287,4 @@ class raidActions extends nlActions
 
         $this->redirect('raidFiche', array('id' => $soiree->getIdSoiree()));
     }
-
-
-    //---------------------------------------------------------------
-    // action d'imports
-    //---------------------------------------------------------------
-
-    /**
-     *
-     */
-    protected function createSource($type, $idType, $code)
-    {
-        $source = SourceObjetQuery::create()
-            ->filterByType($type)
-            ->filterByIdType($idType)
-            ->filterByCode($code)
-            ->findOne();
-
-        if($source)
-
-            return $source;
-
-        $source = new SourceObjet();
-        $source->setType($type);
-        $source->setIdType($idType);
-        $source->setCode($code);
-        $source->save();
-
-        return $source;
-    }
-
-    /**
-     *
-     */
-    protected function getSource($infos, $item)
-    {
-        if(empty($infos['source']))
-            throw new Exception(sprintf('Pas de source ("%s")',
-                $infos['id']
-            ));
-
-        // 1 : craft
-        // 2 : raid
-        // 5 : marchands
-
-        $source = array_pop($infos['source']);
-
-        if ($source == 5) {
-            $mapLibToken = array(
-                1 => array('Couronne%', 'Heaume%'),
-                3 => array('Epaulières%', 'Mantelet%'),
-                5 => array('Plastron%'),
-                7 => array('Jambières%'),
-                10 => array('Gantelets%')
-            );
-
-            // token -> objet à classe définie
-            if (!empty($infos['reqclass']) && !empty($mapLibToken[$infos['slot']])) {
-                // on retrouve le token
-                $token = ObjetQuery::create()
-                    ->condition('ilevel', 'Objet.Ilevel = ?', $infos['level'])
-                    ->condition('slot', 'Objet.IdSlot1 IS NULL', null)
-                    ->condition('classes', 'Objet.Classes LIKE ?', '%'.$item->getClasses().'%')
-                    ->combine(array('ilevel', 'slot', 'classes'), 'and', 'base');
-
-                $cond = array();
-                foreach ($mapLibToken[$infos['slot']] as $key => $namePart) {
-                    $condName = $infos['slot'].'_'.$key;
-                    $token = $token->condition($condName, 'Objet.NomFr LIKE ?', $namePart);
-                    $cond[] = $condName;
-                }
-
-                $token = $token
-                    ->combine($cond, 'or', 'nom')
-                    ->where(array('base', 'nom'), 'and')
-                    ->findOne();
-
-                if (!$token) {
-                    return $this->createSource(
-                        'Vaillances', null, 'achat'
-                    );
-                }
-
-                return $this->createSource(
-                    'Objet', $token->getIdObjet(), 'token'
-                );
-            }
-
-            // objet vendu en vaillances
-            return $this->createSource(
-                'Vaillances', null, 'achat'
-            );
-        }
-
-        if(empty($infos['sourcemore']))
-            throw new Exception(sprintf('Pas de sourcemore ("%s")',
-                $infos['id']
-            ));
-
-        $sourcemore = $infos['sourcemore'][0];
-
-        if ($source == 2) {
-            if(empty($sourcemore['z']))
-                throw new Exception(sprintf('Pas de zone ("%s")',
-                    $infos['id']
-                ));
-
-            $zone = $sourcemore['z'];
-
-            if(empty($this->mapRaidBoss[$zone]))
-                throw new Exception(sprintf('Raid non supporte ("%s" / %s)',
-                    $infos['id'], $zone
-                ));
-
-            if(count($sourcemore) == 1) // trash loot
-
-                return $this->createSource(
-                    'Raid', $this->mapRaidBoss[$zone]->getIdRaid(), 'trashs'
-                );
-
-            if((!empty($sourcemore['bd']) || !empty($sourcemore['dd']))
-                && count($sourcemore) == 2
-            ) // loot partagé
-
-                return $this->createSource(
-                    'Raid', $this->mapRaidBoss[$zone]->getIdRaid(), 'zone'
-                );
-
-            if(empty($sourcemore['n']))
-                throw new Exception(sprintf('Pas de nom défini ("%s")',
-                    $infos['id']
-                ));
-
-            // on cherche le boss dans le raid
-            $nom = $sourcemore['n'];
-            foreach ($this->mapRaidBoss[$zone]->getBosss() as $boss) {
-                if($boss->getCadavreFr() == $nom)
-
-                    return $this->createSource(
-                        'Boss', $boss->getIdBoss(), 'boss'
-                    );
-            }
-
-            throw new Exception(sprintf('Boss inconnu ("%s" / %s)',
-                $infos['id'], $sourcemore['n']
-            ));
-        }
-
-        if ($source == 1) {
-            return $this->createSource(
-                'Craft', null, 'craft'
-            );
-        }
-
-        throw new Exception(sprintf('Source non supportée ("%s" / %s)',
-            $infos['id'], $source
-        ));
-    }
-
-    protected $mapRaidBoss;
-
-    /**
-     *
-     * @param sfWebRequest $request requete courante
-     */
-    public function executeSyncObjets($request)
-    {
-        // ObjetQuery::create()
-            // ->update(array(
-               // 'IdSourceObjet' => null
-            // ));
-
-        // $listeRaids = RaidQuery::create()
-            // ->find();
-
-        // $this->mapRaidBoss = nlMisc::indexBy('IdZone', $listeRaids);
-
-        $listeObjets = ObjetQuery::create()
-            // ->filterByJsonSource('%[2]%')
-            // ->filterByIdObjet('76359')
-            ->setFormatter(ModelCriteria::FORMAT_ON_DEMAND)
-            // ->limit(100)
-            ->find();
-
-        foreach ($listeObjets as $objet) {
-            try {
-                // calcul des objets source
-                // $json = json_decode($objet->getJsonSource(), true);
-
-                // $objet->setSourceObjet(
-                    // $this->getSource($json, $objet)
-                // );
-
-                $objet->save();
-            } catch (Exception $e) {
-                echo '<pre>';
-                echo $objet->getNomFr();
-                echo "\n";
-                echo $e->getMessage();
-                echo "\n";
-                echo $objet->getJsonSource();
-                echo "\n";
-                echo '</pre>';
-                continue;
-            }
-        }
-
-        die;
-    }
-
 }

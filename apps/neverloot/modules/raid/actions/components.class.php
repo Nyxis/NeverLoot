@@ -22,7 +22,7 @@ class raidComponents extends sfComponents
     {
         // liste des raids
         $this->listeRaids = RaidQuery::create()
-            ->orderByIdRaid(Criteria::DESC)
+            ->orderByOrdreInverse(Criteria::DESC)
             ->find();
 
         // liste des status
@@ -101,7 +101,7 @@ class raidComponents extends sfComponents
 
         $this->boss->setListePersos($this->listePersos);
         $this->itemLists = array(
-            'normal' => nlMisc::indexBy('IdObjet', $this->boss->getListeObjets(false)),
+            'normal'   => nlMisc::indexBy('IdObjet', $this->boss->getListeObjets(false)),
             'heroique' => nlMisc::indexBy('IdObjet', $this->boss->getListeObjets(true)),
         );
 

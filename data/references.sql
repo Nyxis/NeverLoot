@@ -2635,7 +2635,7 @@ INSERT INTO `wow_objet` (`id_objet`, `ilevel`, `heroique`, `nom_fr`, `nom_en`, `
 (86337, 496, 0, 'Ceinture du dernier hiver de soigneur', 'Healer''s Belt of Final Winter', 'inv_belt_cloth_challengepriest_d_01', '', '{"armor":1283,"classs":4,"displayid":116189,"id":86337,"level":496,"name":"3Ceinture du dernier hiver de soigneur","reqlevel":90,"slot":6,"slotbak":6,"source":[2],"sourcemore":[{"z":6067}],"subclass":1,"upgrades":[4,8]}', 618, 1, 6, NULL),
 (86338, 496, 0, 'Ceinture du dernier hiver d’invocateur', 'Invoker''s Belt of Final Winter', 'inv_belt_raidmage_l_01', '', '{"armor":1283,"classs":4,"displayid":110666,"id":86338,"level":496,"name":"3Ceinture du dernier hiver d’invocateur","reqlevel":90,"slot":6,"slotbak":6,"source":[2],"sourcemore":[{"z":6067}],"subclass":1,"upgrades":[4,8]}', 618, 1, 6, NULL),
 (86339, 496, 0, 'Ceinture du dernier hiver de sorcier', 'Sorcerer''s Belt of Final Winter', 'inv_belt_raidmage_l_01', '', '{"armor":1283,"classs":4,"displayid":110666,"id":86339,"level":496,"name":"3Ceinture du dernier hiver de sorcier","reqlevel":90,"slot":6,"slotbak":6,"source":[2],"sourcemore":[{"z":6067}],"subclass":1,"upgrades":[4,8]}', 618, 1, 6, NULL),
-(86340, 496, 0, 'Corde d’automne éternel de tisseur', 'Weaver''s Cord of Eternal Autumn', 'inv_belt_leather_raidmonk_l_01', '', '{"armor":1633,"classs":4,"displayid":111366,"id":86340,"level":496,"name":"3Corde d’automne éternel de tisseur","reqlevel":90,"slot":6,"slotbak":6,"source":[2],"sourcemore":[{"bd":1,"z":6067}],"subclass":2,"upgrades":[4,8]}', 620, 2, 6, NULL),
+(86340, 496, 0, 'Corde d’automne éternel de tisseur', 'Weaver''s Cord of Eternal Autumn', 'inv_belt_leather_raidmonk_l_01', '', '{"armor":1633,"classs":4,"displayid":111366,"id":86340,"level":496,"name":"3Corde d’automne éternel de tisseur","reqlevel":90,"slot":6,"slotbak":6,"source":[2],"sourcemore":[{"bd":1,"z":6067}],"subclass":2,"upgrades":[4,8]}', 618, 2, 6, NULL),
 (86341, 496, 0, 'Corde d’automne éternel de traqueur', 'Stalker''s Cord of Eternal Autumn', 'inv_belt_leather_raidrogue_l_01', '', '{"armor":1633,"classs":4,"displayid":112759,"id":86341,"level":496,"name":"3Corde d’automne éternel de traqueur","reqlevel":90,"slot":6,"slotbak":6,"source":[2],"sourcemore":[{"z":6067}],"subclass":2,"upgrades":[4,8]}', 618, 2, 6, NULL),
 (86342, 496, 0, 'Chaîne d’été sans fin de lieur', 'Binder''s Chain of Unending Summer', 'inv_belt_mail_raidshaman_l_01', '', '{"armor":2272,"classs":4,"displayid":116408,"id":86342,"level":496,"name":"3Chaîne d’été sans fin de lieur","reqlevel":90,"slot":6,"slotbak":6,"source":[2],"sourcemore":[{"z":6067}],"subclass":3,"upgrades":[4,8]}', 618, 3, 6, NULL),
 (86343, 496, 0, 'Chaîne d’été sans fin de forestier', 'Ranger''s Chain of Unending Summer', 'inv_belt_mail_raidhunter_l_01', '', '{"armor":2272,"classs":4,"displayid":111884,"id":86343,"level":496,"name":"3Chaîne d’été sans fin de forestier","reqlevel":90,"slot":6,"slotbak":6,"source":[2],"sourcemore":[{"z":6067}],"subclass":3,"upgrades":[4,8]}', 618, 3, 6, NULL),
@@ -3341,16 +3341,16 @@ INSERT INTO `wow_objet` (`id_objet`, `ilevel`, `heroique`, `nom_fr`, `nom_en`, `
 (93394, 480, 0, 'Sautoir du cœur pur', 'Choker of the Pure Heart', 'INV_Jewelry_Necklace_45', '', '{"armor":0,"classs":4,"displayid":54999,"id":93394,"level":480,"name":"3Sautoir du cœur pur","reqlevel":90,"slot":2,"slotbak":2,"subclass":-3,"upgrades":[4,8]}', NULL, NULL, 2, NULL),
 (93395, 480, 0, 'Eclat du bonheur virevoltant', 'Shard of Pirouetting Happiness', 'INV_Jewelry_Necklace_02', '', '{"armor":0,"classs":4,"displayid":9854,"id":93395,"level":480,"name":"3Eclat du bonheur virevoltant","reqlevel":90,"slot":2,"slotbak":2,"subclass":-3,"upgrades":[4,8]}', NULL, NULL, 2, NULL);
 
-INSERT INTO `wow_raid` (`id_raid`, `id_zone`, `nom_fr`, `nom_en`, `image`) VALUES
-(1, 5892, 'L''Ame des Dragons', 'Dragon Soul', 'vignette_dragon_soul.jpg'),
-(2, 5723, 'Terres de Feu', 'Firelands', 'firelands.jpg'),
-(3, 5334, 'Bastion du Crépuscule', 'Bastion of Twilight', 'bot.jpg'),
-(4, 5638, 'Trône des Quatre-Vents', 'Four Winds Throne', 't4v.jpg'),
-(5, 6125, 'Caveaux Mogu''shan', 'Mogu''shan Vaults', 'mogushan_caveaux.jpg'),
-(6, 6297, 'Coeur de la peur', 'Heart of the Fear', NULL),
-(7, 6067, 'Terrasse Printanière', 'Terrace of Endless Spring', NULL),
-(8, 6622, 'Trône du Tonnerre', 'Throne of Thunder', NULL),
-(9, 12, 'Pandarie', 'Pandaria', NULL);
+INSERT INTO `wow_raid` (`id_raid`, `id_zone`, `nom_fr`, `nom_en`, `image`, `inv_ordre`) VALUES
+(1, 5892, 'L''Ame des Dragons', 'Dragon Soul', 'vignette_dragon_soul.jpg', 14),
+(2, 5723, 'Terres de Feu', 'Firelands', 'firelands.jpg', 13),
+(3, 5334, 'Bastion du Crépuscule', 'Bastion of Twilight', 'bot.jpg', 10),
+(4, 5638, 'Trône des Quatre-Vents', 'Four Winds Throne', 't4v.jpg', 11),
+(5, 6125, 'Caveaux Mogu''shan', 'Mogu''shan Vaults', 'mogushan_caveaux.jpg', 16),
+(6, 6297, 'Coeur de la peur', 'Heart of the Fear', 'hotf.jpg', 18),
+(7, 6067, 'Terrasse Printanière', 'Terrace of Endless Spring', 'endless_spring.jpg', 17),
+(8, 6622, 'Trône du Tonnerre', 'Throne of Thunder', 'thunder.jpg', 19),
+(9, 12, 'Pandarie', 'Pandaria', 'mop.jpg', 15);
 
 INSERT INTO `wow_ref_acces` (`id_ref_acces`, `code_acces`) VALUES
 (1, 'admin'),

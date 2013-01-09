@@ -36,10 +36,12 @@ class Boss extends BaseBoss
         $this->listeObjets = $this->getObjectQuery()
             ->filterByHeroique($heroique ? 1 : 0)
             ->orderByIdSlot1()
+            ->orderByNomFr()
             ->find();
 
-        foreach($this->listeObjets as $objet)
+        foreach ($this->listeObjets as $objet) {
             $objet->initPersosPrioritaires($this->currentListPerso);
+        }
 
         return $this->listeObjets;
     }

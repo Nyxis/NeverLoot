@@ -24,13 +24,10 @@ class Compte extends BaseCompte
      */
     public function crediter($credit)
     {
-        $this->setNbRaids(
-            floatval($this->getNbRaids()) + floatval($credit)
-        );
+        $this->setNbRaids(floatval($this->getNbRaids()) + floatval($credit));
 
         return $this;
     }
-
 
     /**
      * calcule le ratio du perso
@@ -39,11 +36,7 @@ class Compte extends BaseCompte
     public function calculerPriorite()
     {
         $nbRaids = $this->getNbRaids();
-        if($nbRaids < 1) $nbRaids = 1;
-
-        $this->setPriorite(
-            round(($this->getNbLoot() / $nbRaids) * 10, 2)
-        );
+        $this->setPriorite($nbRaids < 1 ? 10 : round(($this->getNbLoot() / $nbRaids) * 10, 2));
 
         return $this;
     }
@@ -57,7 +50,6 @@ class Compte extends BaseCompte
         $this->setNbLoot(intval($this->getNbLoot())+$nb);
         $this->save();
     }
-
 
     /**
      * surcharge du set pour recalculer le ratio à chaque modif

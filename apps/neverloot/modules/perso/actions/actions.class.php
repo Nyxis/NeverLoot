@@ -99,9 +99,9 @@ class persoActions extends nlActions
      * action de listing des persos
      * @param sfWebRequest $request requete courante
      */
-    public function executeListe($request)
+    public function executeListeChampions($request)
     {
-        $this->listeMainsActifs = PersoQuery::create()
+        $this->listePerso = PersoQuery::create()
             ->filterByIsMain(true)
             ->useCompteQuery()
                 ->useRefAccesQuery(null, Criteria::INNER_JOIN)
@@ -111,13 +111,23 @@ class persoActions extends nlActions
             ->orderBy('Nom')
             ->with('Compte')
             ->find();
+    }
 
-        // $this->listeComptesActifs = CompteQuery::create()
-        //     ->distinct('Compte.IdCompte')
-        //     ->usePersoQuery('Perso', Criteria::INNER_JOIN)
-        //         ->filterByIsMain(true)
-        //     ->endUse()
-            // ->with('Perso')
-            // ->find();
+    /**
+     * action de listing des membres
+     * @param sfWebRequest $request requete courante
+     */
+    public function executeListeMembres($request)
+    {
+        $this->listePerso = PersoQuery::create()
+            ->filterByIsMain(true)
+            ->useCompteQuery()
+                ->useRefAccesQuery(null, Criteria::INNER_JOIN)
+                    ->filterByCodeAcces(array('membre', 'enregistré'))
+                ->endUse()
+            ->endUse()
+            ->orderBy('Nom')
+            ->with('Compte')
+            ->find();
     }
 }
