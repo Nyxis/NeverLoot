@@ -19,15 +19,19 @@
 
     <?php if($nobody): ?>
     <?php else: ?>
-        <table class="liste">
+        <table class="liste" cellspacing="0">
             <tbody>
-            <?php foreach($listeAttributions as $wishlistObjet): ?>
+            <?php foreach($listeAttributions as $index => $wishlistObjet): ?>
                 <?php $perso = $wishlistObjet->getWishlist()->getPerso(); ?>
                 <tr>
                     <td class="input"><input type="checkbox" name="<?php echo $wishlistObjet->getIdWishlistObjet() ?>" /></td>
                     <td class="img_role"><?php echo image_tag($perso->getSpeRelatedByIdSpe1()->getRole()->getImage()); ?></td>
                     <td class="img_classe"><?php echo image_tag($perso->getClasse()->getImage()); ?></td>
-                    <td class="nom <?php echo $perso->getClasse()->getCode(); ?>"><?php echo $perso->getNom(); ?></td>
+                    <td class="nom">
+                        <a class="<?php echo $perso->getClasse()->getCode(); ?>" href="<?php echo url_for2('persoFiche', array('id_perso' => $perso->getIdPerso(), 'nom' => $perso->getNom())) ?>" target="perso">
+                            <?php echo $perso->getNom(); ?>
+                        </a>
+                    </td>
                     <td class="wlspe">(<?php echo sfInflector::humanize($wishlistObjet->getWishlist()->getTypeWishlist()->getCode()) ?>)</td>
                     <td class="loot"><?php if(!is_null($wishlistObjet->getIdAttribution())): ?><?php echo image_tag('pictos/wl_spe1.png', array()); ?><?php endif; ?></td>
                     <td class="prio">ratio : <span><?php echo $perso->getPriorite(); ?></span></td>
@@ -58,7 +62,7 @@
             <div><a href="<?php echo $urlRecycle; ?>" rel="<?php echo $item->getIdObjet(); ?>" class="manage_item">Attribuer</a></div>
         </div>
         <div class="nl_box_valign_wrap">
-            <?php $urlRecycle = url_for2('raidRecycleLoot', array('disenchant' => 0)); ?>
+            <?php $urlRecycle = url_for2('raidRecycleLoot', array('disenchant' => 1)); ?>
             <div><?php echo image_tag('pictos/dez.png'); ?></div>
             <div><a href="<?php echo $urlRecycle; ?>" rel="<?php echo $item->getIdObjet(); ?>" class="manage_item">Désenchanter</a></div>
         </div>

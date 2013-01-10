@@ -25,7 +25,7 @@
                                 </div>
                                 <div class="inner">
                                     <?php foreach($infos['data'] as $perso) : ?>
-                                        <a href="<?php echo url_for2('persoFiche', array('id_perso' => $perso->getIdPerso(), 'nom' => $perso->getNom())) ?>">
+                                        <a href="<?php echo url_for2('persoFiche', array('id_perso' => $perso->getIdPerso(), 'nom' => $perso->getNom())) ?>" target="perso">
                                             <?php include_partial('perso/perso_min', array('perso' => $perso)); ?>
                                         </a>
                                     <?php endforeach; ?>

@@ -27,6 +27,7 @@ h2 { font-size:22px; margin-bottom:10px; }
 p { margin-top:3px; margin-bottom:3px;}
 a { color:yellow; text-decoration:none; font-style:italic; }
 a:hover { color:white; text-decoration:underline; }
+.odd { background-color: #111; }
 
 
 /*---------------------------------------------------------------
@@ -159,17 +160,17 @@ select { width: 212px; cursor: pointer; }
 /*---------------------------------------------------------------
 ** couleurs de classes
 **---------------------------------------------------------------*/
-.chaman   	 { color:#2359FF; }
-.hunt 		   { color:#AAD372; }
-.deathknight { color:#C41E3B; }
-.droode 	   { color:#FF7C0A; }
-.warlock 	   { color:#9382C9; }
-.warrior 	   { color:#C69B6D; }
-.mage  		   { color:#68CCEF; }
-.paladin 	   { color:#F48CBA; }
-.priest 	   { color:white;   }
-.rogue 	 	   { color:#FFF468; }
-.monk        { color:#00FFBA; }
+.chaman   	 { color:#2359FF !important; }
+.hunt 		   { color:#AAD372 !important; }
+.deathknight { color:#C41E3B !important; }
+.droode 	   { color:#FF7C0A !important; }
+.warlock 	   { color:#9382C9 !important; }
+.warrior 	   { color:#C69B6D !important; }
+.mage  		   { color:#68CCEF !important; }
+.paladin 	   { color:#F48CBA !important; }
+.priest 	   { color:white !important;   }
+.rogue 	 	   { color:#FFF468 !important; }
+.monk        { color:#00FFBA !important; }
 
 
 
@@ -416,7 +417,6 @@ select { width: 212px; cursor: pointer; }
 ** roster
 **---------------------------------------------------------------*/
 
-#roster .perso.odd { background-color: #111; }
 #roster .perso > * { display:inline-block; vertical-align: middle; margin-left:10px; margin-right:10px; width:150px;}
 #roster .main { padding-top:5px; padding-bottom:5px; }
 #roster .reroll { margin-left:46px; }
@@ -428,6 +428,7 @@ select { width: 212px; cursor: pointer; }
 #roster .perso > a > div+div { padding-bottom: 4px; padding-left: 5px; }
 #roster .perso > a > div+div div:first-child { font-weight:bold; }
 
+#roster .spe { margin-bottom: 0px; }
 #roster .spe img { width: 30px; }
 #roster .spe div+div { font-size:0.9em; }
 #roster .spe div+div div+div { padding-bottom:4px; }
@@ -501,13 +502,14 @@ select { width: 212px; cursor: pointer; }
 
 /** liste persos */
 .listePrio { width: 500px; margin-top:10px; margin-left:10px;}
-.listePrio table { margin-top:10px;}
-.listePrio .perso { margin-left:30px; }
+.listePrio table { margin-top:10px; border-spacing: 0px; }
 .listePrio table .perso td { padding-right:20px; vertical-align:middle; }
-.listePrio .perso .img_classe { width:50px; padding-right:0px; text-align: right; }
+.listePrio .perso .img_classe { width:50px; padding-right:0px; padding-bottom:5px; padding-top: 5px;  text-align: right; }
+.listePrio .perso:first-child .img_classe { padding-top: 0px; }
 .listePrio .perso .img_classe img { width:25px; }
 .listePrio .perso .nom { width:350px; font-size: 1.2em;}
-.listePrio .perso .loot { width:110px; padding-right:10px; vertical-align: top; }
+.listePrio .perso .nom a { font-style: normal; }
+.listePrio .perso .loot { width:110px; padding-right:10px; vertical-align: middle; }
 .listePrio .perso .loot img { width:25px; }
 .listePrio .perso .loot a:hover { color:#0078A3; text-decoration:none; }
 .listePrio .perso .prio { width:125px; padding-right:10px; }
@@ -537,13 +539,15 @@ select { width: 212px; cursor: pointer; }
 }
 .attribution .encart .lib { text-align:right; }
 
+.attribution .liste { border-spacing: 0px; }
 .attribution .liste tr { margin-left:30px; }
-.attribution .liste td { padding-right:10px; vertical-align:middle; }
+.attribution .liste td { padding-right:10px; padding-top:3px; padding-bottom:3px; vertical-align:middle; }
 .attribution .liste .input { width:25px; padding-left:30px; }
 .attribution .liste .img_role img { width:30px; }
 .attribution .liste .img_classe { padding-right:0px; }
 .attribution .liste .img_classe img { width:25px; }
 .attribution .liste .nom { width:140px; font-size: 1.2em;}
+.attribution .liste .nom a { font-style: normal; }
 .attribution .liste .wlspe { width:100px; font-size: 0.7em; font-style:italic; }
 .attribution .liste .loot { width:30px;}
 .attribution .liste .loot img { width:30px;}

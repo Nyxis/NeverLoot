@@ -7,17 +7,19 @@
             <?php if(empty($listePersos)): ?>
 
             <?php else: ?>
-                <table>
+                <table cellspacing="0">
                     <tbody>
-                    <?php foreach($listePersos as $perso): ?>
+                    <?php foreach($listePersos as $index => $perso): ?>
                         <?php $listeLoots = $perso->getLootsForSoiree($soiree); ?>
                         <?php $nbLoots = count($listeLoots); ?>
-                        <tr class="perso">
+                        <tr class="perso <?php echo ($index % 2) ? 'odd' : 'even' ?>">
                             <td class="img_classe">
                                 <?php echo image_tag($perso->getClasse()->getImage()); ?>
                             </td>
-                            <td class="nom <?php echo $perso->getClasse()->getCode(); ?>">
-                                <?php echo $perso->getNom(); ?>
+                            <td class="nom">
+                                <a class="<?php echo $perso->getClasse()->getCode(); ?>" href="<?php echo url_for2('persoFiche', array('id_perso' => $perso->getIdPerso(), 'nom' => $perso->getNom())) ?>" target="perso">
+                                    <?php echo $perso->getNom(); ?>
+                                </a>
                             </td>
                             <td class="loot">
                                 <?php if($nbLoots): ?>
@@ -33,7 +35,7 @@
                             </td>
                         </tr>
                         <?php if($nbLoots): ?>
-                            <tr class="hidden">
+                            <tr class="hidden <?php echo ($index % 2) ? 'odd' : 'even' ?>">
                                 <td colspan="4" class="hidden">
                                     <div class="caddie <?php echo $perso->getIdperso() ?>" style="display:none;">
                                         <?php foreach($listeLoots as $item) : ?>
