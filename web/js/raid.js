@@ -110,8 +110,7 @@ initCompoForm = function(){
  */
 initFicheSoiree = function(){
 
-	$(".calendar").datepicker({
-    });
+	$(".calendar").datepicker();
 
     initGestionLoot();
 }
