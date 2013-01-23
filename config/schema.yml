@@ -40,6 +40,13 @@ propel:
     priorite: { phpName: Priorite, type: FLOAT, required: true, defaultValue: '10' }
     id_ref_acces: { phpName: IdRefAcces, type: INTEGER, required: true, foreignTable: wow_ref_acces, foreignReference: id_ref_acces, onDelete: CASCADE, onUpdate: CASCADE }
     _indexes: { fk_wow_compte_wow_ref_acces: [id_ref_acces] }
+  wow_log:
+    _attributes: { phpName: Log, idMethod: native }
+    id_log: { phpName: IdLog, type: INTEGER, primaryKey: true, autoIncrement: true, required: true }
+    code: { phpName: Code, type: VARCHAR, size: '75', required: true }
+    message: { phpName: Message, type: LONGVARCHAR, required: true }
+    tags: { phpName: Tags, type: LONGVARCHAR, required: true }
+    date: { phpName: Date, type: TIMESTAMP, required: true }
   wow_objet:
     _attributes: { phpName: Objet, idMethod: native }
     id_objet: { phpName: IdObjet, type: INTEGER, primaryKey: true, autoIncrement: false, required: true }

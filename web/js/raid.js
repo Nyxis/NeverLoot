@@ -11,7 +11,7 @@ initRaidForm = function(blocForm) {
 
     // calendrier sur le champ de date
     $blocForm.find('input[name=date]').datepicker({
-
+        dateFormat: 'yy-mm-dd'
     });
 
 }
@@ -136,7 +136,7 @@ initGestionLoot = function() {
         // construction de la liste
         buildListeAttrib($(this).attr('id'));
 
-        $('.listePersosObjet').show('slide', { direction: 'left' }, 300);
+        $('.listePersosObjet').hide().show('slide', { direction: 'left' }, 300);
     });
 
     // switch hm / nm

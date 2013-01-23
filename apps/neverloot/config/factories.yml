@@ -44,5 +44,5 @@ all:
   user:
     class: nlUser
     param:
-      timeout:         1800
+      timeout:         3600
       use_flash:       true
