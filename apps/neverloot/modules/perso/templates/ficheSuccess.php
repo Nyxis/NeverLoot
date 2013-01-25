@@ -1,15 +1,16 @@
 <div id="fiche_perso">
     <div>
-        <div class="blocPerso">
-            <?php include_component('perso', 'perso', array(
-                'perso' => $perso,
-                'edit' => $edit,
-                'listeAcces' => $listeAcces
-            )); ?>
-        </div>
-        <div class="blocCalendar">
+        <?php include_component('perso', 'perso', array(
+            'perso'      => $perso,
+            'edit'       => $edit,
+            'listeAcces' => $listeAcces
+        )); ?>
 
-        </div>
+        <?php include_component('log', 'list', array(
+            'title'     => 'Activité',
+            'nbLogs'    => 50,
+            'tagFilter' => $perso->getTag()
+        )); ?>
     </div>
     <div>
         <div class="blocWishlist">

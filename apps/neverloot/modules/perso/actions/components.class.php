@@ -36,6 +36,15 @@ class persoComponents extends sfActions
     }
 
     /**
+     * composant d'affichage du tableau de bord du perso sur la home de neverloot
+     * @param sfRequest $request
+     */
+    public function executeBoard(sfWebRequest $request)
+    {
+
+    }
+
+    /**
      * composant d'affichage de la liste des priorités pour la liste perso en entrée
      * @param sfWebRequest $request requete courante
      */

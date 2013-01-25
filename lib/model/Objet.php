@@ -16,6 +16,14 @@
  */
 class Objet extends BaseObjet
 {
+    /**
+     * @return string
+     */
+    public function getTag()
+    {
+        return 'objet_'.$this->getIdObjet();
+    }
+
     //---------------------------------------------------------------
     // gestion des loots
     //---------------------------------------------------------------

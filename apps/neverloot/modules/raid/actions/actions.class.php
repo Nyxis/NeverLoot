@@ -232,6 +232,14 @@ class raidActions extends nlActions
         $attribution->setDisenchant($request->getParameter('disenchant', null));
         $attribution->save();
 
+        $soiree = SoireeQuery::create()->findPk($request->getParameter('id_soiree', null));
+        if (!empty($soiree)) {
+            $this->createLog('recycle_loot',
+                array('soiree' => $soiree, 'objet' => $objet, 'disenchant' => $request->getParameter('disenchant', false)),
+                array('recycle_loot', $objet->getTag(), $soiree->getTag())
+            );
+        }
+
         $request->setParameter('current_item', $objet);
         $this->forwardComponent('gestionLoot');
     }
@@ -262,9 +270,18 @@ class raidActions extends nlActions
                 $perso = $persoSoiree->getPerso($con);
 
                 // calcul du crédit (nb raid)
-                $credit = $soiree->getGain() * $persoSoiree->getRefStatutPersoRelatedByIdStatutAdmin($con)->getCoef();
-                $perso->crediter($credit)
-                    ->save($con);
+                $statutSoiree = $persoSoiree->getRefStatutPersoRelatedByIdStatutAdmin($con);
+                $credit = $soiree->getGain() * $statutSoiree->getCoef();
+
+                $perso->crediter($credit)->save($con);
+
+                if ($credit != (float) 0) {
+                    $this->createLog('perso_update_soiree',
+                        array('perso' => $perso, 'soiree' => $soiree, 'statut' => $statutSoiree, 'score' => $credit),
+                        array('perso_update_soiree', $perso->getTag(), $soiree->getTag()),
+                        $con
+                    );
+                }
 
                 // loot temporaires
                 AttributionQuery::create($con)
@@ -278,6 +295,7 @@ class raidActions extends nlActions
 
             $soiree->setEtat(Soiree::CLOSED);
             $soiree->save($con);
+            $this->createLog('raid_close', array('soiree' => $soiree), array('raid_close', $soiree->getTag()), $con);
 
             $con->commit();
         } catch (Exception $e) {

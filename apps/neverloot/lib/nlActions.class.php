@@ -49,4 +49,26 @@ class nlActions extends sfActions
         return sfView::SUCCESS;
     }
 
+
+    //---------------------------------------------------------------
+    // logs
+    //---------------------------------------------------------------
+
+    /**
+     * create a new log and save it
+     * @param string $code
+     * @param array  $var  template vars
+     * @param array  $tags log tags
+     * @param PDO    $con
+     */
+    protected function createLog($code, $vars = array(), array $tags = array(), $con = null)
+    {
+        $log = new Log();
+        $log->setCode($code);
+        $log->setMessage($this->getPartial('log/'.$code, $vars));
+        $log->setTags('||'.implode('||', $tags).'||');
+        $log->setDate(time());
+        $log->save($con);
+    }
+
 }

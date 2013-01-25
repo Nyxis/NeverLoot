@@ -17,12 +17,12 @@ class logComponents extends sfActions
     {
         $this->logsCollection = LogQuery::create()
             ->_if(!empty($this->tagFilter))
-                ->filterByTags('%'.$this->tagFilter.'%', Criteria::LIKE)
+                ->filterByTags('%||'.$this->tagFilter.'||%', Criteria::LIKE)
             ->_endif()
             ->_if(!empty($this->nbLogs))
                 ->limit($this->nbLogs)
             ->_endif()
-            ->orderByDate(Criteria::DESC)
+            ->orderByIdLog(Criteria::DESC)
             ->find();
     }
 }

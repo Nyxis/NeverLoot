@@ -199,7 +199,26 @@ select { width: 212px; cursor: pointer; }
 .login_box .nl_box_footer > div { margin-left: 60px; }
 .register_box .nl_box_footer > div { margin-left: 70px; }
 
+/*---------------------------------------------------------------
+** logs
+**---------------------------------------------------------------*/
 
+.logs { margin-top: 10px; }
+
+.log { padding: 3px 0px; }
+.log a { font-weight: bold; }
+.log img { height: 20px; vertical-align: middle;}
+
+/*---------------------------------------------------------------
+** home
+**---------------------------------------------------------------*/
+
+#home .home_text, #home .board { display:inline-block; vertical-align:top; }
+#home .home_text { width: 501px; margin-right:5px; }
+#home .board { width: 405px; }
+
+#home .home_text .nl_box_body { padding: 0px 10px; padding-bottom: 10px; }
+#home .home_text p { padding: 3px 0px; }
 
 /*---------------------------------------------------------------
 ** fiche perso
@@ -209,6 +228,9 @@ select { width: 212px; cursor: pointer; }
 #fiche_perso > div { display:inline-block; vertical-align:top; }
 #fiche_perso > div:first-child { width: 460px; margin-right:5px; }
 #fiche_perso > div+div { width: 465px; }
+
+/** logs */
+#fiche_perso .logs { width:450px; margin-right:10px; margin-top: 10px; }
 
 /** classe et nom de perso */
 .infos_perso { width:450px; margin-right:10px; }
@@ -309,7 +331,6 @@ select { width: 212px; cursor: pointer; }
 
 .editWlo .nl_box_footer > div { margin-left: 10px; margin-right:10px; }
 .editWlo .nl_box_footer img { margin: 0px; }
-
 
 /*---------------------------------------------------------------
 ** vignettes personnages

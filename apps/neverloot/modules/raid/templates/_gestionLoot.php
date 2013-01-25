@@ -1,7 +1,6 @@
-<?php if(empty($listeBoss)): ?>
-
-<?php else: ?>
+<?php if(!empty($listeBoss)): ?>
     <div class="gestion_loot">
+        <?php include_component('log', 'list', array('title' => 'Activité', 'tagFilter' => $soiree->getTag())); ?>
         <?php $listePersos = $soiree->getListeConfirmes(); ?>
         <div class="listeBoss">
             <?php foreach($listeBoss as $boss): ?>

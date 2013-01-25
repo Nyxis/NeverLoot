@@ -40,6 +40,14 @@ class Soiree extends BaseSoiree
     }
 
     /**
+     * @return string
+     */
+    public function getTag()
+    {
+        return 'soiree_'.$this->getIdSoiree();
+    }
+
+    /**
      * renvoie le statut de la soirée
      * @return string
      */

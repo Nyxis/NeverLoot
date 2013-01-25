@@ -55,6 +55,14 @@ class Perso extends BasePerso
     }
 
     /**
+     * @return string
+     */
+    public function getTag()
+    {
+        return 'perso_'.$this->getIdPerso();
+    }
+
+    /**
      * renvoie l'objet spe1 du perso
      * @return Spe
      */
