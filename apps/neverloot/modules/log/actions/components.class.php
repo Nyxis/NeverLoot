@@ -16,6 +16,9 @@ class logComponents extends sfActions
     public function executeList()
     {
         $this->logsCollection = LogQuery::create()
+            ->_if(!empty($this->codeFilters))
+                ->filterByCode($this->codeFilters, Criteria::IN)
+            ->_endif()
             ->_if(!empty($this->tagFilter))
                 ->filterByTags('%||'.$this->tagFilter.'||%', Criteria::LIKE)
             ->_endif()

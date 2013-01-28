@@ -76,6 +76,9 @@ class raidActions extends nlActions
 
             $this->forward404Unless($soiree);
 
+            // pour faire le diff
+            $oldState = $soiree->getEtat();
+
             // mise à jour
             $soiree->fromArray(
                 $request->getParameterHolder()->getAll(),
@@ -84,6 +87,16 @@ class raidActions extends nlActions
 
             $soiree->setIdSoiree($idSoiree);
             $soiree->save();
+
+            // logs changement gestion des soirées
+            if ($oldState !== $soiree->getEtat()) {
+                if (in_array($soiree->getEtat(), array(Soiree::VALIDEE, Soiree::ANNULEE))) {
+                    $this->createLog('raid_state_changed',
+                        array('soiree' => $soiree),
+                        array('raid_state_changed', $soiree->getTag())
+                    );
+                }
+            }
 
             // maj de la compo
             if ($request->hasParameter('compojson')) {
@@ -150,7 +163,7 @@ class raidActions extends nlActions
     {
         $this->forward404Unless(
             $request->hasParameter('liste_id_wl_objet')
-            // && $request->isXmlHttpRequest()
+            && $request->isXmlHttpRequest()
         );
 
         $listeIdWlObjet = json_decode($request->getParameter('liste_id_wl_objet', array()));
@@ -165,8 +178,12 @@ class raidActions extends nlActions
         if($listeWlObjets->isEmpty())
             $this->forwardComponent('gestionLoot');
 
-        foreach($listeWlObjets as $wlObjet)
-            $wlObjet->setLooted(
+        $soiree = SoireeQuery::create()->findPk(
+            $request->getParameter('id_soiree', null)
+        );
+
+        foreach ($listeWlObjets as $wlObjet) {
+            $attribution = $wlObjet->setLooted(
                 $temp = true,
 
                 // les loots ne comptent pas pour les rerolls
@@ -174,6 +191,15 @@ class raidActions extends nlActions
 
                 $request->getParameter('id_soiree', false)
             );
+
+            // création du log
+            if (!empty($soiree)) {
+                $this->createLog('raid_attrib',
+                    array('attrib' => true, 'objet' => $attribution->getObjet(), 'perso' => $attribution->getPerso(), 'prix' => $attribution->getPrix()),
+                    array('raid_attrib', $attribution->getObjet()->getTag(), $soiree->getTag(), $attribution->getPerso()->getTag())
+                );
+            }
+        }
 
         $request->setParameter('current_item', $wlObjet->getObjet());
         $this->forwardComponent('gestionLoot');
@@ -199,11 +225,25 @@ class raidActions extends nlActions
             ->filterByIdWishlistObjet($listeIdWlObjet)
             ->find();
 
-        if($listeWlObjets->isEmpty())
+        if ($listeWlObjets->isEmpty()) {
             $this->forwardComponent('gestionLoot');
+        }
 
-        foreach($listeWlObjets as $wlObjet)
-            $wlObjet->unsetLooted($temp = true);
+        $soiree = SoireeQuery::create()->findPk(
+            $request->getParameter('id_soiree', null)
+        );
+
+        foreach ($listeWlObjets as $wlObjet) {
+            $attribution = $wlObjet->unsetLooted($temp = true);
+
+            // création du log
+            if (!empty($soiree)) {
+                $this->createLog('raid_attrib',
+                    array('attrib' => false, 'objet' => $attribution->getObjet(), 'perso' => $attribution->getPerso(), 'prix' => $attribution->getPrix()),
+                    array('raid_attrib', $attribution->getObjet()->getTag(), $soiree->getTag(), $attribution->getPerso()->getTag())
+                );
+            }
+        }
 
         $request->setParameter('current_item', $wlObjet->getObjet());
         $this->forwardComponent('gestionLoot');

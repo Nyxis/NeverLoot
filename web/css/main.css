@@ -208,6 +208,9 @@ select { width: 212px; cursor: pointer; }
 .log { padding: 3px 0px; }
 .log a { font-weight: bold; }
 .log img { height: 20px; vertical-align: middle;}
+.log .epic { color: #660099 !important; }
+.log .valid { color: green; font-weight: bold; }
+.log .cancel { color: red; font-weight: bold; }
 
 /*---------------------------------------------------------------
 ** home

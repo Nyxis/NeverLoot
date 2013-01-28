@@ -143,20 +143,42 @@ class wishlistActions extends nlActions
         );
 
         // récup de l'objet
-        $wlObjet->setObjet(ObjetQuery::create()->findPk(
-            $request->getParameter('id_objet', false)
-        ));
+        $objet = ObjetQuery::create()->findPk($request->getParameter('id_objet', false));
+        $oldObjetId = $wlObjet->getIdObjet();
+        $wlObjet->setObjet($objet);
+
+        // log si changé
+        if ($objet->getIdObjet() != $oldObjetId) {
+            $this->createLog('perso_wlo',
+                array('objet' => $objet, 'perso' => $perso, 'wishlist' => $wlObjet->getWishlist()),
+                array('perso_wlo', $objet->getTag(), $perso->getTag())
+            );
+        }
 
         // ajout de loot
-        if($request->getParameter('process', false) == 'add')
-            $wlObjet->setLooted(
+        if ($request->getParameter('process', false) == 'add') {
+            $attribution = $wlObjet->setLooted(
                 $temp = false,
                 $this->getUser()->isAdmin() ? $request->getParameter('cost', 0) : 0
             );
 
+            // création du log
+            $this->createLog('perso_attrib',
+                array('attrib' => true, 'objet' => $objet, 'perso' => $perso, 'prix' => $attribution->getPrix(), 'wishlist' => $wlObjet->getWishlist()),
+                array('perso_attrib', $objet->getTag(), $perso->getTag())
+            );
+        }
+
         // retrait de loot
-        elseif($request->getParameter('process', false) == 'remove')
-            $wlObjet->unsetLooted($temp = false);
+        elseif ($request->getParameter('process', false) == 'remove') {
+            $attribution = $wlObjet->unsetLooted($temp = false);
+
+            // création du log
+            $this->createLog('perso_attrib',
+                array('attrib' => false, 'objet' => $objet, 'perso' => $perso, 'prix' => $attribution->getPrix(), 'wishlist' => $wlObjet->getWishlist()),
+                array('perso_attrib', $objet->getTag(), $perso->getTag())
+            );
+        }
 
         // sauvegarde
         $wlObjet->save();

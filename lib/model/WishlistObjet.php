@@ -90,7 +90,7 @@ class WishlistObjet extends BaseWishlistObjet
         // mise à jour du compte
         $perso->getCompte()->addLoot($attribution->getPrix());
 
-        return $this;
+        return $attribution;
     }
 
     /**
@@ -102,9 +102,9 @@ class WishlistObjet extends BaseWishlistObjet
     {
         $attribution = $this->getAttribution();
 
-        if(!$attribution || $attribution->getTmp() != $tmp)
-
+        if (!$attribution || $attribution->getTmp() != $tmp) {
             return $this;
+        }
 
         // mise à jour du compte
         $this->getWishlist()
@@ -113,7 +113,7 @@ class WishlistObjet extends BaseWishlistObjet
 
         $attribution->delete();
 
-        return $this;
+        return $attribution;
     }
 
 } // WishlistObjet

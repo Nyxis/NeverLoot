@@ -63,9 +63,11 @@ class nlActions extends sfActions
      */
     protected function createLog($code, $vars = array(), array $tags = array(), $con = null)
     {
+        $logMessage = str_replace("\n", '', $this->getPartial('log/'.$code, $vars));
+
         $log = new Log();
         $log->setCode($code);
-        $log->setMessage($this->getPartial('log/'.$code, $vars));
+        $log->setMessage($logMessage);
         $log->setTags('||'.implode('||', $tags).'||');
         $log->setDate(time());
         $log->save($con);

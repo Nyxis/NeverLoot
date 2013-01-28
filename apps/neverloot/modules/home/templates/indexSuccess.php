@@ -16,7 +16,8 @@
     <?php include_component('perso', 'board', array()); ?>
 
     <?php include_component('log', 'list', array(
-        'title'  => 'Activité',
-        'nbLogs' => 50
+        'title'     => 'Activité',
+        'nbLogs'    => 50,
+        'codeFilters' => array('raid_attrib', 'recycle_loot', 'raid_state_changed', 'raid_close')
     )); ?>
 </div>
