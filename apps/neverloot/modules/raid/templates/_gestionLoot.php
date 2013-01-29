@@ -1,21 +1,33 @@
 <?php if(!empty($listeBoss)): ?>
     <div class="gestion_loot">
-        <?php include_component('log', 'list', array('title' => 'Activité', 'tagFilter' => $soiree->getTag())); ?>
+
+        <?php // liste des boss ?>
         <?php $listePersos = $soiree->getListeConfirmes(); ?>
         <div class="listeBoss">
             <?php foreach($listeBoss as $boss): ?>
                 <?php include_component('raid', 'ficheBoss', array(
                     'listePersos' => $listePersos,
-                    'boss' => $boss,
-                    'id_objet' => isset($id_objet) ? $id_objet : null
+                    'boss'        => $boss,
+                    'id_objet'    => isset($id_objet) ? $id_objet : null
                 )); ?>
             <?php endforeach; ?>
         </div>
+
         <div class="listePersos">
+            <?php // flux d'activité de la soirée ?>
+            <?php include_component('log', 'list', array(
+                'title'     => 'Activité',
+                'tagFilter' => $soiree->getTag(),
+                'accordion' => 'liste_prio'
+            )); ?>
+
+            <?php // liste des attributions ?>
             <?php include_component('perso', 'listePrio', array(
                 'listePersos' => $listePersos,
-                'soiree' => $soiree
+                'soiree'      => $soiree
             )); ?>
+
+            <?php // placeholder pour les attributions des objets ?>
             <div class="listePersosObjet" style="display:none;">
                 <div class="nl_box_tbf attribution">
                     <div class="nl_box_header">

@@ -1,8 +1,8 @@
 <div class="nl_box_tb listePrio">
-    <div class="nl_box_header collapser" <?php collapser('nl_liste_prio'); ?>>
+    <div class="nl_box_header acc_click" <?php accordion('liste_prio'); ?>>
         <span class="title">Priorités et attributions</span>
     </div>
-    <div class="nl_box_content collapsible" <?php collapsible('nl_liste_prio'); ?>>
+    <div class="nl_box_content acc_content" <?php accordion_target('liste_prio'); ?>>
         <div class="nl_box_body">
             <?php if(empty($listePersos)): ?>
 

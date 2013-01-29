@@ -524,6 +524,9 @@ select { width: 212px; cursor: pointer; }
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 10px #850010;
 }
 
+/** logs */
+.gestion_loot .logs { width: 500px; margin-top:10px; margin-left:10px; }
+
 /** liste persos */
 .listePrio { width: 500px; margin-top:10px; margin-left:10px;}
 .listePrio table { margin-top:10px; border-spacing: 0px; }

@@ -41,30 +41,32 @@
         </table>
     <?php endif; ?>
 </div>
-<?php if($sf_user->isAdmin() && !$nobody) : ?>
-    <div class="nl_box_footer">
-        <div class="nl_box_valign_wrap">
-            <?php $urlAdd = url_for2('raidAddItem'); ?>
-            <div><?php echo image_tag('pictos/check.png'); ?></div>
-            <div><a href="<?php echo $urlAdd; ?>" rel="<?php echo $item->getIdObjet(); ?>" class="manage_item">Attribuer</a></div>
+<?php if($sf_user->isAdmin()): ?>
+    <?php if($nobody): ?>
+        <div class="nl_box_footer">
+            <div class="nl_box_valign_wrap">
+                <?php $urlRecycle = url_for2('raidRecycleLoot', array('disenchant' => 0)); ?>
+                <div><?php echo image_tag('pictos/wl_spe1.png'); ?></div>
+                <div><a href="<?php echo $urlRecycle; ?>" rel="<?php echo $item->getIdObjet(); ?>" class="manage_item">Attribuer</a></div>
+            </div>
+            <div class="nl_box_valign_wrap">
+                <?php $urlRecycle = url_for2('raidRecycleLoot', array('disenchant' => 1)); ?>
+                <div><?php echo image_tag('pictos/dez.png'); ?></div>
+                <div><a href="<?php echo $urlRecycle; ?>" rel="<?php echo $item->getIdObjet(); ?>" class="manage_item">Désenchanter</a></div>
+            </div>
         </div>
-        <div class="nl_box_valign_wrap">
-            <?php $urlRemove = url_for2('raidRemoveItem'); ?>
-            <div><?php echo image_tag('pictos/DeleteRed.png', array()); ?></div>
-            <div><a href="<?php echo $urlRemove; ?>" rel="<?php echo $item->getIdObjet(); ?>" class="manage_item">Retirer</a></div>
+    <?php else: ?>
+        <div class="nl_box_footer">
+            <div class="nl_box_valign_wrap">
+                <?php $urlAdd = url_for2('raidAddItem'); ?>
+                <div><?php echo image_tag('pictos/check.png'); ?></div>
+                <div><a href="<?php echo $urlAdd; ?>" rel="<?php echo $item->getIdObjet(); ?>" class="manage_item">Attribuer</a></div>
+            </div>
+            <div class="nl_box_valign_wrap">
+                <?php $urlRemove = url_for2('raidRemoveItem'); ?>
+                <div><?php echo image_tag('pictos/DeleteRed.png', array()); ?></div>
+                <div><a href="<?php echo $urlRemove; ?>" rel="<?php echo $item->getIdObjet(); ?>" class="manage_item">Retirer</a></div>
+            </div>
         </div>
-    </div>
-<?php elseif($nobody) : ?>
-    <div class="nl_box_footer">
-        <div class="nl_box_valign_wrap">
-            <?php $urlRecycle = url_for2('raidRecycleLoot', array('disenchant' => 0)); ?>
-            <div><?php echo image_tag('pictos/wl_spe1.png'); ?></div>
-            <div><a href="<?php echo $urlRecycle; ?>" rel="<?php echo $item->getIdObjet(); ?>" class="manage_item">Attribuer</a></div>
-        </div>
-        <div class="nl_box_valign_wrap">
-            <?php $urlRecycle = url_for2('raidRecycleLoot', array('disenchant' => 1)); ?>
-            <div><?php echo image_tag('pictos/dez.png'); ?></div>
-            <div><a href="<?php echo $urlRecycle; ?>" rel="<?php echo $item->getIdObjet(); ?>" class="manage_item">Désenchanter</a></div>
-        </div>
-    </div>
+    <?php endif; ?>
 <?php endif; ?>
