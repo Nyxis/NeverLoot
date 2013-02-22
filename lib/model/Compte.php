@@ -36,7 +36,9 @@ class Compte extends BaseCompte
     public function calculerPriorite()
     {
         $nbRaids = $this->getNbRaids();
-        $this->setPriorite($nbRaids < 1 ? 10 : round(($this->getNbLoot() / $nbRaids) * 10, 2));
+        $nbLoot = $this->getNbLoot();
+
+        $this->setPriorite(round((($nbLoot < 1 ? 1 : $nbLoot) / ($nbRaids < 1 ? 1 : $nbRaids)) * 10, 2));
 
         return $this;
     }
