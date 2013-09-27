@@ -12,6 +12,17 @@ propel:
     id_soiree: { phpName: IdSoiree, type: INTEGER, required: true, foreignTable: wow_soiree, foreignReference: id_soiree, onDelete: CASCADE, onUpdate: CASCADE }
     id_perso: { phpName: IdPerso, type: INTEGER, required: false, foreignTable: wow_perso, foreignReference: id_perso, onDelete: CASCADE, onUpdate: CASCADE }
     _indexes: { fk_wow_attribution_wow_objet1: [id_objet], fk_wow_attribution_wow_soiree1: [id_soiree], fk_wow_attribution_wow_perso1: [id_perso] }
+  wow_buff:
+    _attributes: { phpName: Buff, idMethod: native }
+    id_buff: { phpName: IdBuff, type: INTEGER, primaryKey: true, autoIncrement: true, required: true }
+    id_buff_type: { phpName: IdBuffType, type: INTEGER, required: true, foreignTable: wow_buff_type, foreignReference: id_buff_type, onDelete: CASCADE, onUpdate: CASCADE }
+    label: { phpName: Label, type: VARCHAR, size: '55', required: true }
+    image: { phpName: Image, type: VARCHAR, size: '255', required: false }
+    _indexes: { fk_wow_buff_type_wow_spe_buff1: [id_buff_type] }
+  wow_buff_type:
+    _attributes: { phpName: BuffType, idMethod: native }
+    id_buff_type: { phpName: IdBuffType, type: INTEGER, primaryKey: true, autoIncrement: true, required: true }
+    label: { phpName: Label, type: VARCHAR, size: '10', required: true }
   wow_boss:
     _attributes: { phpName: Boss, idMethod: native }
     id_boss: { phpName: IdBoss, type: INTEGER, primaryKey: true, autoIncrement: true, required: true }
@@ -137,6 +148,13 @@ propel:
     type: { phpName: Type, type: VARCHAR, size: '10', required: true }
     id_type: { phpName: IdType, type: INTEGER, required: false }
     code: { phpName: Code, type: VARCHAR, size: '45', required: false }
+    description: { phpName: Description, type: LONGVARCHAR, required: false }
+  wow_spe_buff:
+    _attributes: { phpName: SpeBuff, idMethod: native }
+    id_spe: { phpName: IdSpeBuff, type: INTEGER, primaryKey: true, autoIncrement: true, required: true }
+    id_spe: { phpName: IdSpe, type: INTEGER, required: true, foreignTable: wow_spe, foreignReference: id_spe, onDelete: CASCADE, onUpdate: CASCADE }
+    id_buff: { phpName: IdBuff, type: INTEGER, required: true, foreignTable: wow_buff, foreignReference: id_buff, onDelete: CASCADE, onUpdate: CASCADE }
+    _indexes: { fk_wow_spe_wow_spe_buff1: [id_spe], fk_wow_spe_buff_wow_spe1: [id_spe] }
   wow_spe:
     _attributes: { phpName: Spe, idMethod: native }
     id_spe: { phpName: IdSpe, type: INTEGER, primaryKey: true, autoIncrement: true, required: true }

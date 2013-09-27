@@ -8,7 +8,7 @@
 
         <?php include_component('log', 'list', array(
             'title'     => 'Activité',
-            'nbLogs'    => 50,
+            'nbLogs'    => 25,
             'tagFilter' => $perso->getTag()
         )); ?>
     </div>

@@ -116,6 +116,17 @@ class homeActions extends sfActions
      */
     public function executeImport($request)
     {
+        $objets = ObjetQuery::create()
+            ->filterByJsonSource('{{%', Criteria::LIKE)
+            ->setFormatter(ModelCriteria::FORMAT_ON_DEMAND)
+            ->find();
+
+        foreach ($objets as $objet) {
+            $objet->setJsonSource('{'.trim(trim($objet->getJsonSource(),'{'), '}').'}');
+            $objet->save();
+            echo $objet->getIlevel().' - '.$objet->getNomFr()."<br/>";
+        }
+
         // on vide les tables
         ComptePeer::doDeleteAll();
         SoireePeer::doDeleteAll();

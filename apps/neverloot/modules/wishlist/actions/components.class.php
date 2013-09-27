@@ -183,8 +183,8 @@ class wishlistComponents extends sfActions
         $this->confIlvl = array(
             'range'  => true,
             'min'    => 476,
-            'max'    => 516,
-            'values' => array(476, 496),
+            'max'    => 600,
+            'values' => array(522, 534)
         );
 
         $this->edit = !$this->wishlist->isNew();

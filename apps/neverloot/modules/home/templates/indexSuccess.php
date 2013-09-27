@@ -18,6 +18,6 @@
     <?php include_component('log', 'list', array(
         'title'     => 'Activité',
         'nbLogs'    => 50,
-        'codeFilters' => array('raid_attrib', 'recycle_loot', 'raid_state_changed', 'raid_close')
+        'codeFilters' => array('raid_attrib', 'raid_state_changed', 'raid_close')
     )); ?>
 </div>

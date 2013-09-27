@@ -340,17 +340,17 @@ class Objet extends BaseObjet
         if (empty($nameFr)) {
             throw new Exception('Pas de nom');
         }
+
         $this->setNomFr($nameFr);
-
-        $ilvl = (int) $pageWowheadFr->level;
-        if (empty($ilvl) || $ilvl < $config['min_ilvl']) {
-            throw new Exception('Ilvl incorrect : '.$ilvl);
-        }
-        $this->setIlevel($ilvl);
-
-        $this->setImage((string) $pageWowheadFr->icon);
         $this->setJsonSource((string) $pageWowheadFr->json);
 
+        // $ilvl = (int) $pageWowheadFr->level;
+        // if (empty($ilvl) || $ilvl < $config['min_ilvl']) {
+        //     throw new Exception('Ilvl incorrect : '.$ilvl);
+        // }
+        // $this->setIlevel($ilvl);
+
+        // $this->setImage((string) $pageWowheadFr->icon);
         return $this;
     }
 
